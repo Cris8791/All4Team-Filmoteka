@@ -1,84 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Roboto:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="css/styles.css" />
+    <title>Page title</title>
+    <link rel="stylesheet" href="./sass/index.scss" />
+    <script type="module" src="./index.js"></script>
   </head>
   <body>
-    <header class="header-container">
-      <div>
-        <a href="index.html" class="logo-container">
-          <svg>
-            <use href="css/images/symbol-defs.svg#icon-film"></use>
-          </svg>
-          <span>Filmoteka</span>
-        </a>
-        <nav>
-          <ul class="navigation-tabs">
-            <li><a href="index.html" class="link active-link">HOME</a></li>
-            <li><a href="my-library.html" class="link">MY LIBRARY</a></li>
-          </ul>
-        </nav>
-      </div>
-      <div class="form-container">
-        <!-- search form -->
-        <!-- trebuie sa i se modifice name de cel cu API -->
-        <form class="search-form" id="search-form">
-          <input
-            type="text"
-            name="searchQuery"
-            autocomplete="off"
-            placeholder="Search movies..."
-          />
-          <button type="submit">
-            <svg>
-              <use href="/css/images/symbol-defs.svg#icon-search"></use>
-            </svg>
-          </button>
-        </form>
-        <!-- mesajul de eroare -->
-        <span class="error-message"
-          >Search result not successful. Enter the correct movie name and search
-          again</span
-        >
-      </div>
-    </header>
-    <main>
-      <!-- movie cards -->
-      <div class="pagination-container">
-        <!-- <button class="left-button" type="button">
-					<svg>
-						<use href="/css/images/icon-arrow-left.svg"></use>
-					</svg>
-				</button>
-				<button class="right-button" type="button">
-					<svg>
-						<use href="/css/images/icon-arrow-right.svg"></use>
-					</svg>
-				</button> -->
-      </div>
-    </main>
-    <footer class="footer-container">
-      <span>&copy; 2023 | All Rights Reserved |</span>
-      <span
-        >Developed with <span class="heart">&#x2764;</span> by
-        <span class="team">All4Team</span></span
-      >
-    </footer>
-    <button type="button" class="to-search-form">To search form</button>
-    <script src="index.js" type="module"></script>
+    <!-- ❗️❗️❗️ Add partials like so for every page -->
     <include src="./partials/example.html"></include>
   </body>
 </html>
