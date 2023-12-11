@@ -3,6 +3,12 @@ import {
   fetchTrendingMovies,
   fetchSearchedMovies,
 } from './api.js';
+import {
+  WATCHED_KEY,
+  QUEUE_KEY,
+  saveMovieList,
+  loadMovieList,
+} from './storage.js';
 
 var pageData = {
     crtPage: 0,
@@ -22,15 +28,16 @@ var pageData = {
     vote_average: 0,
     vote_count: 0,
   },
-  movieArray = new Array();
+  movieArray = [],
+  watchedList = [],
+  queueList = [];
 
 async function fetchMovies() {
   const result = await fetchSearchedMovies('Otto', 1);
-  console.dir(result);
+  console.dir('****fetchMovies  ', result);
 }
 function processMoviesData(data) {
-  movieArray = [];
-  console.log('data   ', data);
+  //get the movie data and put them into movieData, and push them into movieArray
   data.results.map(
     ({
       id,
@@ -67,6 +74,13 @@ function processMoviesData(data) {
         genre += listOfGenres[j].name;
       }
       movieData.genres = genre;
+      //add "watched" and "queue" properties
+      if (watchedList.findIndex(movie => movie.id === movieData.id) > -1) {
+        movieData.watched = true;
+      } else movieData.watched = false;
+      if (queueList.findIndex(movie => movie.id === movieData.id) > -1) {
+        movieData.queued = true;
+      } else movieData.queued = false;
       movieArray.push(movieData);
     }
   );
@@ -75,6 +89,10 @@ async function initializePage() {
   //put the spinner until the initialize is done
   //******TO DO ******/
 
+  //read the movies in library (if there are some)
+  watchedList = loadMovieList(WATCHED_KEY);
+  queueList = loadMovieList(QUEUE_KEY);
+
   //fetch movie genres and put the result in listOfGenres
   const listOfGen = await fetchMovieGenres();
   listOfGenres = listOfGen.genres;
@@ -82,7 +100,11 @@ async function initializePage() {
   //fetch movies for landing page
   const result = await fetchTrendingMovies();
   processMoviesData(result);
-  console.log(movieArray);
+
+  // renderMoviesList(movieArray);
+
+  // **************
+  console.log('1 movieArray= ', movieArray);
 }
 
 initializePage();
