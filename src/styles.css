@@ -19,7 +19,7 @@ body {
   padding-right: 20px;
   height: 200px;
   background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
-    url(/css/images/background-image-mobile.png);
+    url(./images/background-image-mobile.png);
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -28,7 +28,7 @@ body {
   (min-resolution: 192dpi),
   (min-resolution: 2dppx) {
   .header-container {
-    background-image: url(/css/images/background-image-mobile-2x.png);
+    background-image: url(./images/background-image-mobile-2x.png);
   }
 }
 .header-container div {
@@ -139,14 +139,14 @@ div.form-container {
     padding-top: 41px;
     padding-left: 71px;
     padding-right: 76px;
-    background-image: url(/css/images/background-image-tablet.png);
+    background-image: url(./images/background-image-tablet.png);
   }
   @media (min-device-pixel-ratio: 2),
     (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi),
     (min-resolution: 2dppx) {
     .header-container {
-      background-image: url(../css/images/background-image-tablet-2x.png);
+      background-image: url(./images/background-image-tablet-2x.png);
     }
   }
   .logo-container {
@@ -174,14 +174,14 @@ div.form-container {
 @media (min-width: 769px) {
   .header-container {
     padding-right: 71px;
-    background-image: url(/css/images/background-image-desktop.png);
+    background-image: url(./images/background-image-desktop.png);
   }
   @media (min-device-pixel-ratio: 2),
     (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi),
     (min-resolution: 2dppx) {
     .header-container {
-      background-image: url(/css/images/background-image-desktop-2x.png);
+      background-image: url(./images/background-image-desktop-2x.png);
     }
   }
 }
