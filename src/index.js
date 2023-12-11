@@ -2,7 +2,7 @@ import {
   fetchMovieGenres,
   fetchTrendingMovies,
   fetchSearchedMovies,
-} from './api.js';
+} from './api';
 
 var pageData = {
     crtPage: 0,
