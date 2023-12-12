@@ -12,3 +12,79 @@ function renderMoviesList(list) {
   const bodyElem = document.querySelector('body');
   bodyElem.insertAdjacentHTML('beforeend', markup);
 }
+
+function renderPaginationButtons(crtPage, totalPages) {
+  // pag.crt
+  // 1 -> se vad        1,2,3,...,total,rgtarw
+  // 2 -> se vad lftarw,1,2,3,4,...,total,rgtarw
+  // 3 -> se vad lftarw,1,2,3,4,5,...,total,rgtarw
+  // 4 -> se vad lftarw,1,2,3,4,5,6,...,total,rgtarw
+  // 5 -> se vad lftarw,1,...,3,4,5,6,7,...,total,rgtarw
+  // creez un div cu un nr de butoane
+  // cele din extreme sunt cu sageata si sunt vizibile numai in anumite conditii
+  // pe pozitia a treia dinspre margini spre centru vor fi butoane cu "..." si ele vizibile numai in anumite conditii
+  // al doilea buton de la st spre dr, va fi "1"
+  // al doilea buton de la dr spre st va fi totalPages
+  if (totalPages === 1) return;
+  let leftMarkup = `<div class="buttons-div">
+      <button id="lftarwBtn">&larr;</button>
+      <button id="oneBtn">1</button>
+      <button id="lftdotBtn">...</button>`;
+  let rigthMarkup = `
+      <button id="rgtdotBtn">...</button>
+      <button>${totalPages}</button>
+      <button id="rgtarwBtn">&rarr;</button>
+    </div>`;
+  let minPage, maxPage, crtBtn;
+
+  // midMarkup
+  switch (crtPage) {
+    case 1:
+      minPage = 1;
+      maxPage = 3;
+      break;
+    case 2:
+      minPage = 1;
+      maxPage = 4;
+      break;
+    default:
+      minPage = crtPage - 2;
+      maxPage = crtPage + 2;
+  }
+  if (maxPage >= totalPages) maxPage = totalPages - 1;
+  let midMarkup = '';
+  for (let i = minPage; i <= maxPage; i++) {
+    if (i === 1) continue;
+    midMarkup += `<button>${i}</button>`;
+  }
+  let markup = leftMarkup + midMarkup + rigthMarkup;
+
+  //insert the markup beforeend of body
+  const bodyElem = document.querySelector('body');
+  bodyElem.insertAdjacentHTML('beforeend', markup);
+
+  //select the needed button elements
+  const lftarwBtn = document.querySelector('#lftarwBtn');
+  const lftdotBtn = document.querySelector('#lftdotBtn');
+  const rgtdotBtn = document.querySelector('#rgtdotBtn');
+  const rgtarwBtn = document.querySelector('#rgtarwBtn');
+
+  //hide the proper buttons
+  if (crtPage >= 1 && crtPage <= 4) {
+    lftdotBtn.style.display = 'none';
+    crtBtn = crtPage + 1;
+  }
+  if (crtPage === 1) {
+    lftarwBtn.style.display = 'none';
+    crtBtn = 1;
+  }
+  if (crtPage > 4) crtBtn = 6;
+  if (totalPages - maxPage < 2) rgtdotBtn.style.display = 'none';
+  if (crtPage === totalPages) rgtarwBtn.style.display = 'none';
+
+  //select the pagination container element for next actions
+  const pagContainer = document.querySelector('.buttons-div');
+  console.log('crtBtn=', crtBtn);
+}
+
+export { renderMoviesList, renderPaginationButtons };

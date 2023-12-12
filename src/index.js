@@ -3,6 +3,7 @@ import {
   fetchTrendingMovies,
   fetchSearchedMovies,
 } from './api.js';
+import { renderMoviesList, renderPaginationButtons } from './render.js';
 import {
   WATCHED_KEY,
   QUEUE_KEY,
@@ -84,6 +85,7 @@ function processMoviesData(data) {
       movieArray.push(movieData);
     }
   );
+  totalPages = data.total_pages;
 }
 async function initializePage() {
   //put the spinner until the initialize is done
@@ -101,7 +103,8 @@ async function initializePage() {
   const result = await fetchTrendingMovies();
   processMoviesData(result);
 
-  // renderMoviesList(movieArray);
+  renderMoviesList(movieArray);
+  renderPaginationButtons(1, totalPages);
 
   // **************
   console.log('1 movieArray= ', movieArray);
