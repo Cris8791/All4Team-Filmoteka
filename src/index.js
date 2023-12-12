@@ -33,6 +33,25 @@ var pageData = {
   watchedList = [],
   queueList = [];
 
+//
+// modal section
+const closeModalButton = document.getElementById('closeModalBtn');
+const backdrop = document.querySelector('.backdrop.visually-shown');
+closeModalButton.addEventListener('click', function () {
+  backdrop.style.display = 'none';
+});
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape') {
+    backdrop.style.display = 'none';
+  }
+});
+backdrop.addEventListener('click', function (event) {
+  if (event.target === backdrop) {
+    backdrop.style.display = 'none';
+  }
+});
+// end of modal section
+
 async function fetchMovies() {
   const result = await fetchSearchedMovies('Otto', 1);
   console.dir('****fetchMovies  ', result);
@@ -107,7 +126,36 @@ async function initializePage() {
   renderPaginationButtons(1, totalPages);
 
   // **************
-  console.log('1 movieArray= ', movieArray);
+  // console.log('1 movieArray= ', movieArray);
+  btnsDivElem = document.querySelector('.movies-div');
+  btnsDivElem.addEventListener('click', showModal);
 }
+function showModal(event) {
+  const imgId = event.target.attributes[0].value;
+  const pos = movieArray.findIndex(movie => imgId - movie.id === 0);
+  // fill modal content with movie data
+  const titleElem = document.querySelector('.title-film');
+  const imgElem = document.querySelector('.movie-poster');
+  const voteElem = document.querySelector('.vote');
+  const votesElem = document.querySelector('.votes');
+  const popularityElem = document.querySelector('.popularity');
+  const origTitleElem = document.querySelector('.title');
+  const genresElem = document.querySelector('.genres');
+  const overviewElem = document.querySelector('.description-text');
 
+  let m = movieArray[pos];
+  titleElem.innerHTML = m.title;
+  imgElem.src = m.poster_path;
+  // ************
+  // !!!!!!!!!!!! imaginea tb stilizata
+  voteElem.innerHTML = m.vote_average;
+  votesElem.innerHTML = ' / ' + m.vote_count;
+  popularityElem.innerHTML = m.popularity;
+  origTitleElem.innerHTML = m.original_title;
+  genresElem.innerHTML = m.genres;
+  overviewElem.innerHTML = m.overview;
+
+  // show modal window
+  backdrop.style.display = 'block';
+}
 initializePage();

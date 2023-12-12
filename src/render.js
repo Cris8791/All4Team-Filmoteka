@@ -1,16 +1,16 @@
 function renderMoviesList(list) {
   const markup = list
-    .map(({ poster_path, title, genres, release_year, vote_average }) => {
+    .map(({ id, poster_path, title, genres, release_year, vote_average }) => {
       // adaug elemente in markup
       return `<div>
-    <img src="${poster_path}" alt="movie poster" loading="lazy" />
+    <img id="${id}" src="${poster_path}" alt="movie poster" loading="lazy" />
             <p>   ${title} </p>
             <p> ${genres} ${release_year} ${vote_average} </p>
         </div>`;
     })
     .join('');
-  const bodyElem = document.querySelector('body');
-  bodyElem.insertAdjacentHTML('beforeend', markup);
+  const moviesDivElem = document.querySelector('.movies-div');
+  moviesDivElem.innerHTML = markup;
 }
 
 function renderPaginationButtons(crtPage, totalPages) {
@@ -84,7 +84,6 @@ function renderPaginationButtons(crtPage, totalPages) {
 
   //select the pagination container element for next actions
   const pagContainer = document.querySelector('.buttons-div');
-  console.log('crtBtn=', crtBtn);
 }
 
 export { renderMoviesList, renderPaginationButtons };
