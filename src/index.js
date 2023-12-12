@@ -3,6 +3,7 @@ import {
   fetchTrendingMovies,
   fetchSearchedMovies,
 } from './api.js';
+import { renderMoviesList, renderPaginationButtons } from './render.js';
 import {
   WATCHED_KEY,
   QUEUE_KEY,
@@ -84,6 +85,7 @@ function processMoviesData(data) {
       movieArray.push(movieData);
     }
   );
+  totalPages = data.total_pages;
 }
 async function initializePage() {
   //put the spinner until the initialize is done
@@ -102,22 +104,10 @@ async function initializePage() {
   processMoviesData(result);
 
   renderMoviesList(movieArray);
+  renderPaginationButtons(1, totalPages);
 
   // **************
   console.log('1 movieArray= ', movieArray);
 }
-function renderMoviesList(list) {
-  const markup = list
-    .map(({ poster_path, title, genres, release_year, vote_average }) => {
-      // adaug elemente in markup
-      return `<div>
-    <img src="${poster_path}" alt="movie poster" loading="lazy" />
-            <p>   ${title} </p>
-            <p> ${genres} ${release_year} ${vote_average} </p>
-        </div>`;
-    })
-    .join('');
-  const bodyElem = document.querySelector('body');
-  bodyElem.insertAdjacentHTML('beforeend', markup);
-}
+
 initializePage();

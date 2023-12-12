@@ -1,0 +1,219 @@
+:root {
+    --light-color: #fff;
+    --dark-color: #000;
+    --orange-color: #ff6b08;
+    --grey-color: #545454;
+}
+
+body {
+    max-width: 1024px;
+    margin: auto;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: column;
+    gap: 41px;
+    padding-top: 46px;
+    padding-left: 21px;
+    padding-right: 20px;
+    height: 200px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+        url(./images/background-image-mobile.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+@media (min-device-pixel-ratio: 2),
+(-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi),
+(min-resolution: 2dppx) {
+    .header-container {
+        background-image: url(./images/background-image-mobile-2x.png);
+    }
+}
+
+.header-container div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-container a {
+    text-decoration: none;
+    color: var(--light-color);
+}
+
+.logo-container>svg {
+    height: 24px;
+    width: 24px;
+    stroke: var(--grey-color);
+}
+
+.logo-container>span {
+    display: none;
+}
+
+.navigation-tabs {
+    display: flex;
+    flex-direction: row;
+    gap: 39px;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation-tabs a {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.navigation-tabs a.active-link {
+    border-bottom: 3px solid var(--orange-color);
+}
+
+div.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 22px;
+}
+
+.search-form {
+    position: relative;
+    border-bottom: 0.5px solid #fff;
+    width: 280px;
+}
+
+.search-form input {
+    background: transparent;
+    border: none;
+}
+
+.search-form input::placeholder {
+    color: var(--light-color);
+}
+
+.search-form button {
+    background: transparent;
+    border: none;
+    position: absolute;
+    right: 0;
+}
+
+.search-form button svg {
+    width: 12px;
+    height: 12px;
+    stroke: var(--light-color);
+    fill: transparent;
+}
+
+.error-message {
+    color: #ff001b;
+    text-align: center;
+}
+
+.footer-container {
+    background-color: #f7f7f7;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.heart {
+    color: var(--orange-color);
+}
+
+.team {
+    text-decoration-line: underline;
+}
+
+.header-container .buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.header-button {
+    color: var(--light-color);
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    background: transparent;
+    border-radius: 5px;
+    border: 1px solid var(--light-color);
+    height: 44px;
+    width: 130px;
+}
+
+@media screen and (max-width: 320px) {
+    .logo-container {
+        height: 24px;
+    }
+}
+
+@media screen and (min-width: 321px) {
+    .header-container {
+        height: 230px;
+        padding-top: 41px;
+        padding-left: 71px;
+        padding-right: 76px;
+        background-image: url(./images/background-image-tablet.png);
+    }
+
+    @media (min-device-pixel-ratio: 2),
+    (-webkit-min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi),
+    (min-resolution: 2dppx) {
+        .header-container {
+            background-image: url(./images/background-image-tablet-2x.png);
+        }
+    }
+
+    .logo-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .logo-container span {
+        display: inline;
+        text-align: center;
+        font-size: 30px;
+        font-weight: 500;
+    }
+
+    .footer-container {
+        flex-direction: row;
+    }
+
+    .header-container .buttons-container {
+        gap: 15px;
+    }
+
+    .header-button {
+        width: 136px;
+    }
+}
+
+@media (min-width: 769px) {
+    .header-container {
+        padding-right: 71px;
+        background-image: url(./images/background-image-desktop.png);
+    }
+
+    @media (min-device-pixel-ratio: 2),
+    (-webkit-min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi),
+    (min-resolution: 2dppx) {
+        .header-container {
+            background-image: url(./images/background-image-desktop-2x.png);
+        }
+    }
+}

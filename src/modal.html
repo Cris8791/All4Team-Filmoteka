@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page title</title>
+    <link rel="stylesheet" href="./sass/modal.scss" />
+    <script type="module" src="./modal.js"></script>
+  </head>
+  <body>
+  
+      <button id="openModalBtn">Open Modal</button>
+      <div class="backdrop visually-shown" data-attribute="modal">
+        <div class="overlay" id="overlay"></div> 
+      <div class="modal" id="modal">
+        <!--modal_wrapper-->
+        <div class="modal-header">
+          <!--modal-->
+  
+          <span class="close" id="closeModalBtn">&times;</span><!--btn__close-->
+  
+          <div class="movie-info-container">
+            <!--modal__content-->
+            <div class="modal-block-image">
+              <img
+                class="image-modal"
+                src="./images/Rectangle 18.png"
+                alt="image"
+              />
+            </div>
+            <div class="all-informations-container">
+              <!--modal-block-->
+              <h2 class="title-film">A FISTFUL OF LEAD</h2>
+              <!--modal-title-->
+              <div class="info-film">
+                <!--film-info-->
+                <ul class="list film-info__names">
+                  <!--names-->
+                  <li class="film-info_name">
+                    <p class="content-list__item">Vote/Votes</p>
+                  </li>
+                  <li class="film-info_name">
+                    <p class="content-list__item">Popularity</p>
+                  </li>
+                  <li class="film-info_name">
+                    <p class="content-list__item">Original Title</p>
+                  </li>
+                  <li class="film-info_name">
+                    <p class="content-list__item">Genre</p>
+                  </li>
+                </ul>
+                <!--values-->
+                <ul class="list film-info___values">
+                  <li class="film-info_name">
+                    <p class="content-list__item"><span class="vote">7.3</span> / 1260</p>
+                  </li>
+                  <li class="film-info__values">
+                    <p class="content-list__item">960.238</p>
+                  </li>
+                  <li class="film-info__values">
+                    <p class="content-list__item">Oppenheimer</p>
+                  </li>
+                  <li class="film-info__values">
+                    <p class="content-list__item">Drama History</p>
+                  </li>
+                </ul>
+              </div>
+  
+              <h3 class="description-title">ABOUT</h3>
+              <p class="description-text">
+                Four of the West's most infamous outlaws carry out a daring bank heist in the gold-rush town, Bath Water. As the posse takes chase, things take a turn for the worse, as the bandits realize they've been double-crossed - but by who?
+              </p>
+  
+              <!--watched,queue-->
+              <ul class="list-button">
+                <li><button class="watched-btn">Add to watched</button></li>
+                <li><button class="queue-btn">Add to queue</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  <!--  <include src="./partials/example.html"></include>-->
+  </body>
+</html>
