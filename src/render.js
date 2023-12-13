@@ -1,30 +1,20 @@
 function renderMoviesList(list) {
+  console.log('list->', list);
   const markup = list
-    .map(({ poster_path, title, genres, release_year, vote_average }) => {
+    .map(({ id, poster_path, title, genres, release_year, vote_average }) => {
       // adaug elemente in markup
       return `<div>
-    <img src="${poster_path}" alt="movie poster" loading="lazy" />
+    <img id="${id}" src="${poster_path}" alt="movie poster" loading="lazy" />
             <p>   ${title} </p>
             <p> ${genres} ${release_year} ${vote_average} </p>
         </div>`;
     })
     .join('');
-  const bodyElem = document.querySelector('body');
-  bodyElem.insertAdjacentHTML('beforeend', markup);
+  const moviesDivElem = document.querySelector('.movies-div');
+  moviesDivElem.innerHTML = markup;
 }
 
 function renderPaginationButtons(crtPage, totalPages) {
-  // pag.crt
-  // 1 -> se vad        1,2,3,...,total,rgtarw
-  // 2 -> se vad lftarw,1,2,3,4,...,total,rgtarw
-  // 3 -> se vad lftarw,1,2,3,4,5,...,total,rgtarw
-  // 4 -> se vad lftarw,1,2,3,4,5,6,...,total,rgtarw
-  // 5 -> se vad lftarw,1,...,3,4,5,6,7,...,total,rgtarw
-  // creez un div cu un nr de butoane
-  // cele din extreme sunt cu sageata si sunt vizibile numai in anumite conditii
-  // pe pozitia a treia dinspre margini spre centru vor fi butoane cu "..." si ele vizibile numai in anumite conditii
-  // al doilea buton de la st spre dr, va fi "1"
-  // al doilea buton de la dr spre st va fi totalPages
   if (totalPages === 1) return;
   let leftMarkup = `<div class="buttons-div">
       <button id="lftarwBtn">&larr;</button>
@@ -84,7 +74,6 @@ function renderPaginationButtons(crtPage, totalPages) {
 
   //select the pagination container element for next actions
   const pagContainer = document.querySelector('.buttons-div');
-  console.log('crtBtn=', crtBtn);
 }
 
 export { renderMoviesList, renderPaginationButtons };

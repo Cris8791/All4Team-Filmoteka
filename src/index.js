@@ -29,9 +29,67 @@ var pageData = {
     vote_average: 0,
     vote_count: 0,
   },
+  pos = 0,
   movieArray = [],
   watchedList = [],
   queueList = [];
+
+//
+// modal section
+const closeModalButton = document.getElementById('closeModalBtn');
+const backdrop = document.querySelector('.backdrop.visually-shown');
+closeModalButton.addEventListener('click', function () {
+  backdrop.style.display = 'none';
+});
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape') {
+    backdrop.style.display = 'none';
+  }
+});
+backdrop.addEventListener('click', function (event) {
+  if (event.target === backdrop) {
+    backdrop.style.display = 'none';
+  }
+});
+
+const watchedBtn = document.querySelector('.watched-btn');
+const queueBtn = document.querySelector('.queue-btn');
+watchedBtn.addEventListener('click', watchedBtnClick);
+queueBtn.addEventListener('click', queueBtnClick);
+
+function watchedBtnClick() {
+  console.log('watched clicked');
+  if (movieArray[pos].watched) {
+    movieArray[pos].watched = false;
+    watchedBtn.innerHTML = 'Add to watched';
+    let extractPos = watchedList.findIndex(
+      movie => movie.id === movieArray[pos].id
+    );
+    watchedList.splice(extractPos, 1);
+  } else {
+    movieArray[pos].watched = true;
+    watchedList.push(movieArray[pos]);
+    watchedBtn.innerHTML = 'Remove from watched';
+  }
+  saveMovieList(WATCHED_KEY, watchedList);
+}
+function queueBtnClick() {
+  console.log('queue clicked');
+  if (movieArray[pos].queued) {
+    movieArray[pos].queued = false;
+    queueBtn.innerHTML = 'Add to queue';
+    let extractPos = queueList.findIndex(
+      movie => movie.id === movieArray[pos].id
+    );
+    queueList.splice(extractPos, 1);
+  } else {
+    movieArray[pos].queued = true;
+    queueList.push(movieArray[pos]);
+    queueBtn.innerHTML = 'Remove from queue';
+  }
+  saveMovieList(QUEUE_KEY, queueList);
+}
+// end of modal section
 
 async function fetchMovies() {
   const result = await fetchSearchedMovies('Otto', 1);
@@ -107,7 +165,48 @@ async function initializePage() {
   renderPaginationButtons(1, totalPages);
 
   // **************
-  console.log('1 movieArray= ', movieArray);
+  // console.log('1 movieArray= ', movieArray);
+  btnsDivElem = document.querySelector('.movies-div');
+  btnsDivElem.addEventListener('click', showModal);
 }
 
+function showModal(event) {
+  const imgId = event.target.attributes[0].value;
+  pos = movieArray.findIndex(movie => imgId - movie.id === 0);
+  // fill modal content with movie data
+  const titleElem = document.querySelector('.title-film');
+  const imgElem = document.querySelector('.movie-poster');
+  const voteElem = document.querySelector('.vote');
+  const votesElem = document.querySelector('.votes');
+  const popularityElem = document.querySelector('.popularity');
+  const origTitleElem = document.querySelector('.title');
+  const genresElem = document.querySelector('.genres');
+  const overviewElem = document.querySelector('.description-text');
+
+  let m = movieArray[pos];
+  titleElem.innerHTML = m.title;
+  imgElem.src = m.poster_path;
+  // ************
+  // !!!!!!!!!!!! imaginea tb stilizata
+  voteElem.innerHTML = m.vote_average;
+  votesElem.innerHTML = ' / ' + m.vote_count;
+  popularityElem.innerHTML = m.popularity;
+  origTitleElem.innerHTML = m.original_title;
+  genresElem.innerHTML = m.genres;
+  overviewElem.innerHTML = m.overview;
+
+  if (m.watched) {
+    watchedBtn.innerHTML = 'Remove from watched';
+  } else {
+    watchedBtn.innerHTML = 'Add to watched';
+  }
+  if (m.queued) {
+    queueBtn.innerHTML = 'Remove from queue';
+  } else {
+    queueBtn.innerHTML = 'Add to queue';
+  }
+
+  // show modal window
+  backdrop.style.display = 'block';
+}
 initializePage();
