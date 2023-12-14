@@ -4,8 +4,8 @@ function renderMoviesList(list) {
       // adaug elemente in markup
       return `<div>
     <img id="${id}" src="${poster_path}" alt="movie poster" loading="lazy" />
-            <p>   ${title} </p>
-            <p> ${genres} ${release_year} ${vote_average} </p>
+            <p class="movie-title">   ${title} </p>
+            <p class="movie-short-descr"> ${genres} | ${release_year} | <span>${vote_average}</span></p>
         </div>`;
     })
     .join('');
@@ -60,8 +60,8 @@ function renderPaginationButtons(crtPage, totalPages) {
   let markup = leftMarkup + midMarkup + rigthMarkup;
 
   //insert the markup beforeend of body
-  const bodyElem = document.querySelector('body');
-  bodyElem.insertAdjacentHTML('beforeend', markup);
+  const mainElem = document.querySelector('main');
+  mainElem.insertAdjacentHTML('beforeend', markup);
 
   //select the needed button elements
   const lftarwBtn = document.querySelector('#lftarwBtn');

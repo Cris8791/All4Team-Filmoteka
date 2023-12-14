@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Roboto:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <!-- trebuie imbinate continuturile fisierelor de stil
@@ -19,18 +19,13 @@
     <link rel="stylesheet" href="./styles.css" />
     <link rel="stylesheet" href="./sass/_common.scss" />
     <link rel="stylesheet" href="./sass/modal.scss" />
-    <script type="module" src="./index.js"></script>
   </head>
   <body>
-    <!-- ❗️❗️❗️ Add partials like so for every page -->
-    <!-- <include src="modal.html"></include> -->
-    <!-- <include src="index_oxana.html"></include> -->
-    <!-- <include src="my_library.html"></include> -->
     <header class="header-container">
-      <div>
+      <div class="navigation-bar">
         <a href="./index.html" class="logo-container">
           <svg>
-            <use href="./images/symbol-defs.svg"></use>
+            <use href="./images/symbol-defs.svg#icon-film"></use>
           </svg>
           <span>Filmoteka</span>
         </a>
@@ -43,9 +38,8 @@
           </ul>
         </nav>
       </div>
+      <!-- search form -->
       <div class="form-container">
-        <!-- search form -->
-        <!-- trebuie sa i se modifice name de cel cu API -->
         <form class="search-form" id="search-form">
           <input
             type="text"
@@ -55,7 +49,7 @@
           />
           <button type="submit">
             <svg>
-              <use href="./images/symbol-defs.svg"></use>
+              <use href="./images/symbol-defs.svg#icon-search"></use>
             </svg>
           </button>
         </form>
@@ -69,95 +63,82 @@
     <main>
       <!-- movie cards -->
       <div class="movies-div"></div>
-      <div class="pagination-container">
-        <!-- <button class="left-button" type="button">
-					<svg>
-						<use href="/css/images/icon-arrow-left.svg"></use>
-					</svg>
-				</button>
-				<button class="right-button" type="button">
-					<svg>
-						<use href="/css/images/icon-arrow-right.svg"></use>
-					</svg>
-				</button> -->
-      </div>
-    </main>
-    <!-- markup for the modal window -->
-    <div class="backdrop visually-shown" data-attribute="modal">
-      <div class="overlay" id="overlay"></div>
-      <div class="modal" id="modal">
-        <!--modal_wrapper-->
-        <div class="modal-header">
-          <!--modal-->
-          <span class="close" id="closeModalBtn">&times;</span
-          ><!--btn__close-->
-          <div class="movie-info-container">
-            <!--modal__content-->
-            <div class="modal-block-image">
-              <img
-                class="movie-poster image-modal"
-                src="./images/Rectangle 18.png"
-                alt="movie poster"
-              />
-            </div>
-            <div class="all-informations-container">
-              <!--modal-block-->
-              <h2 class="title-film">A FISTFUL OF LEAD</h2>
-              <!--modal-title-->
-              <div class="info-film">
-                <!--film-info-->
-                <ul class="list film-info__names">
-                  <!--names-->
-                  <li class="film-info_name">
-                    <p class="content-list__item">Vote/Votes</p>
-                  </li>
-                  <li class="film-info_name">
-                    <p class="content-list__item">Popularity</p>
-                  </li>
-                  <li class="film-info_name">
-                    <p class="content-list__item">Original Title</p>
-                  </li>
-                  <li class="film-info_name">
-                    <p class="content-list__item">Genre</p>
-                  </li>
-                </ul>
-                <!--values-->
-                <ul class="list film-info___values">
-                  <li class="film-info_name">
-                    <p class="content-list__item">
-                      <span class="vote">7.3</span>
-                      <span class="votes"> / 1260</span>
-                    </p>
-                  </li>
-                  <li class="film-info__values">
-                    <p class="content-list__item popularity">960.238</p>
-                  </li>
-                  <li class="film-info__values">
-                    <p class="content-list__item title">Oppenheimer</p>
-                  </li>
-                  <li class="film-info__values">
-                    <p class="content-list__item genres">Drama History</p>
-                  </li>
+      <!-- markup for the modal window -->
+      <div class="backdrop visually-shown" data-attribute="modal">
+        <div class="overlay" id="overlay"></div>
+        <div class="modal" id="modal">
+          <!--modal_wrapper-->
+          <div class="modal-header">
+            <!--modal-->
+            <span class="close" id="closeModalBtn">&times;</span
+            ><!--btn__close-->
+            <div class="movie-info-container">
+              <!--modal__content-->
+              <div class="modal-block-image">
+                <img
+                  class="movie-poster image-modal"
+                  src="./images/Rectangle 18.png"
+                  alt="movie poster"
+                />
+              </div>
+              <div class="all-informations-container">
+                <!--modal-block-->
+                <h2 class="title-film">A FISTFUL OF LEAD</h2>
+                <!--modal-title-->
+                <div class="info-film">
+                  <!--film-info-->
+                  <ul class="list film-info__names">
+                    <!--names-->
+                    <li class="film-info_name">
+                      <p class="content-list__item">Vote/Votes</p>
+                    </li>
+                    <li class="film-info_name">
+                      <p class="content-list__item">Popularity</p>
+                    </li>
+                    <li class="film-info_name">
+                      <p class="content-list__item">Original Title</p>
+                    </li>
+                    <li class="film-info_name">
+                      <p class="content-list__item">Genre</p>
+                    </li>
+                  </ul>
+                  <!--values-->
+                  <ul class="list film-info___values">
+                    <li class="film-info_name">
+                      <p class="content-list__item">
+                        <span class="vote">7.3</span>
+                        <span class="votes"> / 1260</span>
+                      </p>
+                    </li>
+                    <li class="film-info__values">
+                      <p class="content-list__item popularity">960.238</p>
+                    </li>
+                    <li class="film-info__values">
+                      <p class="content-list__item title">Oppenheimer</p>
+                    </li>
+                    <li class="film-info__values">
+                      <p class="content-list__item genres">Drama History</p>
+                    </li>
+                  </ul>
+                </div>
+                <h3 class="description-title">ABOUT</h3>
+                <p class="description-text">
+                  Four of the West's most infamous outlaws carry out a daring
+                  bank heist in the gold-rush town, Bath Water. As the posse
+                  takes chase, things take a turn for the worse, as the bandits
+                  realize they've been double-crossed - but by who?
+                </p>
+                <!--watched,queue-->
+                <ul class="list-button">
+                  <li><button class="watched-btn">Add to watched</button></li>
+                  <li><button class="queue-btn">Add to queue</button></li>
                 </ul>
               </div>
-              <h3 class="description-title">ABOUT</h3>
-              <p class="description-text">
-                Four of the West's most infamous outlaws carry out a daring bank
-                heist in the gold-rush town, Bath Water. As the posse takes
-                chase, things take a turn for the worse, as the bandits realize
-                they've been double-crossed - but by who?
-              </p>
-              <!--watched,queue-->
-              <ul class="list-button">
-                <li><button class="watched-btn">Add to watched</button></li>
-                <li><button class="queue-btn">Add to queue</button></li>
-              </ul>
             </div>
           </div>
         </div>
       </div>
-    </div>
-
+    </main>
     <footer class="footer-container">
       <span>&copy; 2023 | All Rights Reserved |</span>
       <span
@@ -166,5 +147,6 @@
       >
     </footer>
     <button type="button" class="to-search-form">To search form</button>
+    <script type="module" src="./index.js"></script>
   </body>
 </html>
