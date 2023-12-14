@@ -59,18 +59,39 @@ img {
   display: flex;
   align-items: baseline;
   gap: 39px;
+  list-style-type: none;
   margin: 0;
   padding: 0;
 }
 .navigation-tabs .link {
   padding: 0;
-}
-.navigation-tabs a {
   font-size: 12px;
   font-weight: 500;
 }
 .navigation-tabs a.active-link {
   border-bottom: 3px solid var(--orange-color);
+}
+.logo-container:hover,
+.logo-container:focus,
+.logo-container:hover svg,
+.logo-container:focus svg,
+.navigation-tabs li a:focus,
+.navigation-tabs li a:hover,
+.search-form button:hover svg,
+.search-form button:focus svg,
+.team:hover {
+  color: var(--orange-color);
+  stroke: var(--orange-color);
+}
+.header-button:hover,
+.header-button:focus {
+  background-color: var(--orange-color);
+  border-color: var(--orange-color);
+  box-shadow: 0px 8px 43px 0px rgba(255, 107, 1, 0.6);
+}
+.search-form:hover,
+.search-form:focus {
+  border-color: var(--orange-color);
 }
 div.form-container {
   display: flex;
@@ -90,6 +111,7 @@ div.form-container {
   font-size: 14px;
   color: var(--light-color);
   cursor: pointer;
+  outline: none;
 }
 .search-form input::placeholder {
   color: var(--light-color);
@@ -150,6 +172,16 @@ footer.footer-container {
   height: 44px;
   width: 130px;
 }
+.movies-div {
+  display: grid;
+  justify-content: center;
+  padding: 0;
+  list-style: none;
+  margin-left: auto;
+  margin-right: auto;
+  grid-gap: 20px;
+  padding: 20px;
+}
 @media screen and (min-width: 321px) {
   .header-container {
     padding: 41px 76px 59px 71px;
@@ -175,7 +207,30 @@ footer.footer-container {
     font-size: 30px;
     font-weight: 500;
   }
-
+  .movies-div {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 30px;
+    padding: 60px 76px 50px 76px;
+  }
+  .movie-title {
+    color: var(--dark-color);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    text-transform: uppercase;
+  }
+  .movie-short-descr {
+    color: var(--orange-color);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+  .movie-short-descr span {
+    border-radius: 5px;
+    background-color: var(--orange-color);
+    color: var(--light-color);
+    padding: 1px 10 1px 10px;
+  }
   footer.footer-container {
     flex-direction: row;
     font-size: 16px;
@@ -203,5 +258,9 @@ footer.footer-container {
     .header-container {
       background-image: url(./images/background-image-desktop-2x.png);
     }
+  }
+  .movies-div {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 60px 71px 50px 71px;
   }
 }
