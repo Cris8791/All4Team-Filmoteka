@@ -15,6 +15,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./sass/modal.scss" />
   </head>
   <body>
     <header class="header-container">
@@ -40,11 +41,82 @@
       </div>
       <div class="buttons-container">
         <!-- ma gandesc ca la apasarea unui buton pur si simplu se schimba body-ul paginii, nu trebuie sa fac alta pagina, iar la clasa active se face toggle -->
-        <button class="header-button active">WATCHED</button>
-        <button class="header-button active">QUEUE</button>
+        <button class="watched-btn header-button active">WATCHED</button>
+        <button class="queue-btn header-button active">QUEUE</button>
       </div>
     </header>
-    <main></main>
+    <main>
+      <div class="movies-div movdiv2"></div>
+      <!-- markup for the modal window -->
+      <div class="backdrop visually-shown bckdrp" data-attribute="modal">
+        <div class="overlay" id="overlay"></div>
+        <div class="modal" id="modal">
+          <div class="modal-header">
+            <span class="close" id="closeModalBtn2">&times;</span>
+            <div class="movie-info-container">
+              <div class="modal-block-image">
+                <img
+                  class="movie-poster image-modal"
+                  src="./images/Rectangle 18.png"
+                  alt="movie poster"
+                />
+              </div>
+              <div class="all-informations-container">
+                <h2 class="title-film">A FISTFUL OF LEAD</h2>
+
+                <div class="info-film">
+                  <ul class="list film-info__names">
+                    <li class="film-info_name">
+                      <p class="content-list__item">Vote/Votes</p>
+                    </li>
+                    <li class="film-info_name">
+                      <p class="content-list__item">Popularity</p>
+                    </li>
+                    <li class="film-info_name">
+                      <p class="content-list__item">Original Title</p>
+                    </li>
+                    <li class="film-info_name">
+                      <p class="content-list__item">Genre</p>
+                    </li>
+                  </ul>
+
+                  <ul class="list film-info___values">
+                    <li class="film-info_name">
+                      <p class="content-list__item">
+                        <span class="vote">7.3</span>
+                        <span class="votes"> / 1260</span>
+                      </p>
+                    </li>
+                    <li class="film-info__values">
+                      <p class="content-list__item popularity">960.238</p>
+                    </li>
+                    <li class="film-info__values">
+                      <p class="content-list__item title">Oppenheimer</p>
+                    </li>
+                    <li class="film-info__values">
+                      <p class="content-list__item genres">Drama History</p>
+                    </li>
+                  </ul>
+                </div>
+                <h3 class="description-title">ABOUT</h3>
+                <p class="description-text">
+                  Four of the West's most infamous outlaws carry out a daring
+                  bank heist in the gold-rush town, Bath Water. As the posse
+                  takes chase, things take a turn for the worse, as the bandits
+                  realize they've been double-crossed - but by who?
+                </p>
+                <ul class="list-button">
+                  <li>
+                    <button class="watched-btn wbtn2">Add to watched</button>
+                  </li>
+                  <li><button class="queue-btn qbtn2">Add to queue</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
     <footer class="footer-container">
       <span>&copy; 2023 | All Rights Reserved |</span>
       <span
@@ -52,6 +124,6 @@
         <span class="team">All4Team</span></span
       >
     </footer>
-    <script src="index.js" type="module"></script>
+    <script type="module" src="./my_library.js"></script>
   </body>
 </html>

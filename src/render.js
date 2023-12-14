@@ -59,7 +59,7 @@ function renderPaginationButtons(crtPage, totalPages) {
   }
   let markup = leftMarkup + midMarkup + rigthMarkup;
 
-  //insert the markup beforeend of body
+  //insert the markup beforeend of main
   const mainElem = document.querySelector('main');
   mainElem.insertAdjacentHTML('beforeend', markup);
 
