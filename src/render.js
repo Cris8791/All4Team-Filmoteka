@@ -59,9 +59,9 @@ function renderPaginationButtons(crtPage, totalPages) {
   }
   let markup = leftMarkup + midMarkup + rigthMarkup;
 
-  //insert the markup beforeend of body
-  const bodyElem = document.querySelector('body');
-  bodyElem.insertAdjacentHTML('beforeend', markup);
+  //insert the markup beforeend of main
+  const mainElem = document.querySelector('main');
+  mainElem.insertAdjacentHTML('beforeend', markup);
 
   //select the needed button elements
   const lftarwBtn = document.querySelector('#lftarwBtn');

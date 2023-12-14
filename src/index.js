@@ -29,6 +29,7 @@ var pageData = {
     vote_average: 0,
     vote_count: 0,
   },
+  pos = 0,
   movieArray = [],
   watchedList = [],
   queueList = [];
@@ -50,12 +51,72 @@ backdrop.addEventListener('click', function (event) {
     backdrop.style.display = 'none';
   }
 });
+
+const watchedBtn = document.querySelector('.watched-btn');
+const queueBtn = document.querySelector('.queue-btn');
+watchedBtn.addEventListener('click', watchedBtnClick);
+queueBtn.addEventListener('click', queueBtnClick);
+
+function watchedBtnClick() {
+  console.log('watched clicked');
+  if (movieArray[pos].watched) {
+    movieArray[pos].watched = false;
+    watchedBtn.innerHTML = 'Add to watched';
+    let extractPos = watchedList.findIndex(
+      movie => movie.id === movieArray[pos].id
+    );
+    watchedList.splice(extractPos, 1);
+  } else {
+    movieArray[pos].watched = true;
+    watchedList.push(movieArray[pos]);
+    watchedBtn.innerHTML = 'Remove from watched';
+  }
+  saveMovieList(WATCHED_KEY, watchedList);
+}
+function queueBtnClick() {
+  console.log('queue clicked');
+  if (movieArray[pos].queued) {
+    movieArray[pos].queued = false;
+    queueBtn.innerHTML = 'Add to queue';
+    let extractPos = queueList.findIndex(
+      movie => movie.id === movieArray[pos].id
+    );
+    queueList.splice(extractPos, 1);
+  } else {
+    movieArray[pos].queued = true;
+    queueList.push(movieArray[pos]);
+    queueBtn.innerHTML = 'Remove from queue';
+  }
+  saveMovieList(QUEUE_KEY, queueList);
+}
 // end of modal section
 
-async function fetchMovies() {
-  const result = await fetchSearchedMovies('Otto', 1);
-  console.dir('****fetchMovies  ', result);
+// search section
+const searchForm = document.querySelector('.search-form'),
+  inputElem = document.querySelector('form>input');
+
+async function renderSearchedMovies(text) {
+  const result = await fetchSearchedMovies(text, 1);
+  processMoviesData(result);
+  renderMoviesList(movieArray);
 }
+function onSearch(element) {
+  element.preventDefault();
+  const searchQuery = inputElem.value.trim();
+  if (searchQuery === '') {
+    console.log('BOTIFY: Please, fill the main field');
+    return;
+  }
+  movieArray = [];
+  renderSearchedMovies(searchQuery);
+  //********************** ATENTIE la nr de pagini rezultate! Trebuie sa actualizez si nr.de pagini venit de la API */
+  //********************** ATENTIE la nr de pagini rezultate! Trebuie sa actualizez si nr.de pagini venit de la API */
+  //********************** ATENTIE la nr de pagini rezultate! Trebuie sa actualizez si nr.de pagini venit de la API */
+}
+
+searchForm.addEventListener('submit', onSearch);
+// end of search section
+
 function processMoviesData(data) {
   //get the movie data and put them into movieData, and push them into movieArray
   data.results.map(
@@ -130,9 +191,10 @@ async function initializePage() {
   btnsDivElem = document.querySelector('.movies-div');
   btnsDivElem.addEventListener('click', showModal);
 }
+
 function showModal(event) {
   const imgId = event.target.attributes[0].value;
-  const pos = movieArray.findIndex(movie => imgId - movie.id === 0);
+  pos = movieArray.findIndex(movie => imgId - movie.id === 0);
   // fill modal content with movie data
   const titleElem = document.querySelector('.title-film');
   const imgElem = document.querySelector('.movie-poster');
@@ -154,6 +216,17 @@ function showModal(event) {
   origTitleElem.innerHTML = m.original_title;
   genresElem.innerHTML = m.genres;
   overviewElem.innerHTML = m.overview;
+
+  if (m.watched) {
+    watchedBtn.innerHTML = 'Remove from watched';
+  } else {
+    watchedBtn.innerHTML = 'Add to watched';
+  }
+  if (m.queued) {
+    queueBtn.innerHTML = 'Remove from queue';
+  } else {
+    queueBtn.innerHTML = 'Add to queue';
+  }
 
   // show modal window
   backdrop.style.display = 'block';
