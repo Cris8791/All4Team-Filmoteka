@@ -193,28 +193,15 @@ ul {
 .button-list {
   display: flex;
 }
-.watched-btn {
+.watched-btn,
+.queue-btn,
+.clear-btn {
   margin-right: 10px;
   color: #000;
   background: #fff;
   border: none;
   font-weight: 500;
   line-height: 1.33;
-  text-transform: uppercase;
-  border-radius: 100px;
-  cursor: pointer;
-  transition: 0.25s;
-  width: 157px;
-  height: 50px;
-  font-size: 12px;
-}
-.queue-btn {
-  margin-right: 10px;
-  color: #000;
-  background: #fff;
-  border: none;
-  line-height: 1.33;
-  font-weight: 500;
   text-transform: uppercase;
   border-radius: 100px;
   cursor: pointer;
@@ -224,7 +211,8 @@ ul {
   font-size: 12px;
 }
 .queue-btn:hover,
-.watched-btn:hover {
+.watched-btn:hover,
+.clear-btn {
   color: #fff;
   background: #b92f2c;
 }

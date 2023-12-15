@@ -38,6 +38,17 @@
             <li><a href="./my_library.html" class="link">MY LIBRARY</a></li>
           </ul>
         </nav>
+        <div class="sliding-mode">
+          <input class="checkbox" type="checkbox" id="darkModeToggle" />
+          <label for="darkModeToggle">
+            <svg class="sun">
+              <use href="./images/symbol-defs.svg#icon-sun"></use>
+            </svg>
+            <svg class="moon">
+              <use href="./images/symbol-defs.svg#icon-moon"></use>
+            </svg>
+          </label>
+        </div>
       </div>
       <!-- search form -->
       <div class="form-container">
@@ -147,7 +158,11 @@
         <span class="team">All4Team</span></span
       >
     </footer>
-    <button type="button" class="to-search-form">To search form</button>
+    <button type="button" class="to-search-form">
+      <svg>
+        <use href="./images/symbol-defs.svg#icon-circle-up"></use>
+      </svg>
+    </button>
     <script type="module" src="./index.js"></script>
   </body>
 </html>

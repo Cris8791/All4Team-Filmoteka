@@ -20,6 +20,7 @@ img {
   height: auto;
 }
 .header-container {
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -30,12 +31,21 @@ img {
   background-size: cover;
   background-repeat: no-repeat;
 }
+.my-library.header-container {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+    url(./images/my-library-background-image-mobile.png);
+}
 @media (min-device-pixel-ratio: 2),
   (-webkit-min-device-pixel-ratio: 2),
   (min-resolution: 192dpi),
   (min-resolution: 2dppx) {
   .header-container {
-    background-image: url(./images/background-image-mobile-2x.png);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+      url(./images/background-image-mobile-2x.png);
+  }
+  .my-library.header-container {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+      url(./images/my-library-background-image-mobile-2x.png);
   }
 }
 .navigation-bar {
@@ -54,6 +64,11 @@ img {
 }
 .logo-container > span {
   display: none;
+}
+.sliding-mode {
+  position: absolute;
+  top: 0px;
+  right: 20px;
 }
 .navigation-tabs {
   display: flex;
@@ -133,8 +148,20 @@ div.form-container {
   color: #ff001b;
   text-align: center;
 }
-main {
-  width: 100%;
+.to-search-form {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+.to-search-form svg {
+  width: 24px;
+  height: 24px;
+}
+.to-search-form:hover {
+  fill: var(--orange-color);
 }
 footer.footer-container {
   width: 100%;
@@ -155,6 +182,12 @@ footer.footer-container {
 .team {
   text-decoration-line: underline;
 }
+.header-container .all-buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
 .header-container .buttons-container {
   display: flex;
   justify-content: center;
@@ -172,10 +205,83 @@ footer.footer-container {
   height: 44px;
   width: 130px;
 }
+main {
+  width: 100%;
+  background-color: var(--light-color);
+  transition: background-color 0.3s ease;
+}
+main.dark-mode {
+  background-color: var(--grey-color);
+}
+label {
+  width: 40px;
+  height: 20px;
+  position: relative;
+  display: block;
+  background: #ebebeb;
+  border-radius: 10px;
+  box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4),
+    inset 0px -5px 15px rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+label:after {
+  content: '';
+  width: 13px;
+  height: 13px;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background: linear-gradient(180deg, #ffcc89, #d8860b);
+  border-radius: 8px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+input.checkbox {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+input:checked + label {
+  background: #242424;
+}
+input.checkbox:checked + label:after {
+  left: 37px;
+  transform: translateX(-100%);
+  background: linear-gradient(180deg, #777, #3a3a3a);
+}
+label,
+label:after {
+  transition: 0.3s;
+}
+label:active:after {
+  width: 20px;
+}
+label svg {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  top: 4px;
+  z-index: 100;
+}
+label svg.sun {
+  left: 4px;
+  fill: #fff;
+  transition: 0.3s;
+}
+label svg.moon {
+  left: 24px;
+  fill: #7e7e7e;
+  transition: 0.3s;
+}
+input:checked + label svg.sun {
+  fill: #7e7e7e;
+}
+input:checked + label svg.moon {
+  fill: #fff;
+}
+
 .movies-div {
   display: grid;
   justify-content: center;
-  padding: 0;
   list-style: none;
   margin-left: auto;
   margin-right: auto;
@@ -185,14 +291,30 @@ footer.footer-container {
 @media screen and (min-width: 321px) {
   .header-container {
     padding: 41px 76px 59px 71px;
-    background-image: url(./images/background-image-tablet.png);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+      url(./images/background-image-tablet.png);
+  }
+  .my-library.header-container {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+      url(./images/my-library-background-image-tablet.png);
   }
   @media (min-device-pixel-ratio: 2),
     (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi),
     (min-resolution: 2dppx) {
     .header-container {
-      background-image: url(./images/background-image-tablet-2x.png);
+      background-image: linear-gradient(
+          rgba(0, 0, 0, 0.56),
+          rgba(0, 0, 0, 0.56)
+        ),
+        url(./images/background-image-tablet-2x.png);
+    }
+    .my-library.header-container {
+      background-image: linear-gradient(
+          rgba(0, 0, 0, 0.56),
+          rgba(0, 0, 0, 0.56)
+        ),
+        url(./images/my-library-background-image-tablet-2x.png);
     }
   }
   .logo-container {
@@ -235,28 +357,40 @@ footer.footer-container {
     flex-direction: row;
     font-size: 16px;
   }
-
   .header-container .buttons-container {
     gap: 15px;
   }
-
   .header-button {
     width: 136px;
   }
 }
-
 @media (min-width: 769px) {
   .header-container {
     padding-right: 71px;
-    background-image: url(./images/background-image-desktop.png);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+      url(./images/background-image-desktop.png);
   }
-
+  .my-library.header-container {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+      url(./images/my-library-background-image-desktop.png);
+  }
   @media (min-device-pixel-ratio: 2),
     (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi),
     (min-resolution: 2dppx) {
     .header-container {
-      background-image: url(./images/background-image-desktop-2x.png);
+      background-image: linear-gradient(
+          rgba(0, 0, 0, 0.56),
+          rgba(0, 0, 0, 0.56)
+        ),
+        url(./images/background-image-desktop-2x.png);
+    }
+    .my-library.header-container {
+      background-image: linear-gradient(
+          rgba(0, 0, 0, 0.56),
+          rgba(0, 0, 0, 0.56)
+        ),
+        url(./images/my-library-background-image-desktop-2x.png);
     }
   }
   .movies-div {
