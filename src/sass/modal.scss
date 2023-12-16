@@ -156,7 +156,7 @@ ul {
   text-align: center;
   width: 36px;
   border-radius: 5px;
-  background: #b92f2c;
+  background: var(--orange-color);
   color: #fff;
 }
 .film-info__values {
@@ -217,6 +217,7 @@ ul {
 .watched-button:hover {
   color: var(--light-color);
   background: var(--orange-color);
+  border-color: #ff6b08;
 }
 .list-button {
   display: flex;
