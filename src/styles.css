@@ -5,8 +5,7 @@
   --grey-color: #545454;
 }
 body {
-  max-width: 1024px;
-  height: 100vh;
+  min-height: 100vh;
   margin: auto;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
@@ -19,31 +18,40 @@ img {
   max-width: 100%;
   height: auto;
 }
-.header-container {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 41px;
-  padding: 46px 20px 46px 21px;
+.header-background {
   background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
     url(./images/background-image-mobile.png);
   background-size: cover;
   background-repeat: no-repeat;
+  width: 100%;
+  margin: 0 auto;
 }
-.my-library.header-container {
+.header-container {
+  max-width: 1024px;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 41px;
+  padding: 46px 20px 46px 21px;
+}
+.my-library-header-background {
   background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
     url(./images/my-library-background-image-mobile.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  margin: 0 auto;
 }
 @media (min-device-pixel-ratio: 2),
   (-webkit-min-device-pixel-ratio: 2),
   (min-resolution: 192dpi),
   (min-resolution: 2dppx) {
-  .header-container {
+  .header-background {
     background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
       url(./images/background-image-mobile-2x.png);
   }
-  .my-library.header-container {
+  .my-library-header-background {
     background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
       url(./images/my-library-background-image-mobile-2x.png);
   }
@@ -52,6 +60,7 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  width: 100%;
 }
 .header-container a {
   text-decoration: none;
@@ -113,6 +122,7 @@ div.form-container {
   align-items: center;
   flex-direction: column;
   gap: 22px;
+  width: 100%;
 }
 .search-form {
   position: relative;
@@ -164,6 +174,7 @@ div.form-container {
   fill: var(--orange-color);
 }
 footer.footer-container {
+  margin-top: auto;
   width: 100%;
   padding-top: 29px;
   padding-bottom: 29px;
@@ -195,15 +206,16 @@ footer.footer-container {
 }
 .header-button {
   color: var(--light-color);
-  text-align: center;
+  border: 1px solid var(--light-color);
+  height: 44px;
+  width: 130px;
   font-size: 12px;
   font-weight: 500;
   line-height: 16px;
   background: transparent;
   border-radius: 5px;
-  border: 1px solid var(--light-color);
-  height: 44px;
-  width: 130px;
+  cursor: pointer;
+  transition: 0.25s;
 }
 main {
   width: 100%;
@@ -280,6 +292,7 @@ input:checked + label svg.moon {
 }
 
 .movies-div {
+  max-width: 1024px;
   display: grid;
   justify-content: center;
   list-style: none;
@@ -289,12 +302,14 @@ input:checked + label svg.moon {
   padding: 20px;
 }
 @media screen and (min-width: 321px) {
-  .header-container {
-    padding: 41px 76px 59px 71px;
+  .header-background {
     background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
       url(./images/background-image-tablet.png);
   }
-  .my-library.header-container {
+  .header-container {
+    padding: 41px 76px 59px 71px;
+  }
+  .my-library-header-background {
     background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
       url(./images/my-library-background-image-tablet.png);
   }
@@ -302,14 +317,14 @@ input:checked + label svg.moon {
     (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi),
     (min-resolution: 2dppx) {
-    .header-container {
+    .header-background {
       background-image: linear-gradient(
           rgba(0, 0, 0, 0.56),
           rgba(0, 0, 0, 0.56)
         ),
         url(./images/background-image-tablet-2x.png);
     }
-    .my-library.header-container {
+    .my-library-header-background {
       background-image: linear-gradient(
           rgba(0, 0, 0, 0.56),
           rgba(0, 0, 0, 0.56)
@@ -364,13 +379,15 @@ input:checked + label svg.moon {
     width: 136px;
   }
 }
-@media (min-width: 769px) {
-  .header-container {
-    padding-right: 71px;
+@media screen and (min-width: 769px) {
+  .header-background {
     background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
       url(./images/background-image-desktop.png);
   }
-  .my-library.header-container {
+  .header-container {
+    padding-right: 71px;
+  }
+  .my-library-header-background {
     background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
       url(./images/my-library-background-image-desktop.png);
   }
@@ -378,14 +395,14 @@ input:checked + label svg.moon {
     (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi),
     (min-resolution: 2dppx) {
-    .header-container {
+    .header-background {
       background-image: linear-gradient(
           rgba(0, 0, 0, 0.56),
           rgba(0, 0, 0, 0.56)
         ),
         url(./images/background-image-desktop-2x.png);
     }
-    .my-library.header-container {
+    .my-library-header-background {
       background-image: linear-gradient(
           rgba(0, 0, 0, 0.56),
           rgba(0, 0, 0, 0.56)

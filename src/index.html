@@ -19,58 +19,60 @@
     <link rel="stylesheet" href="./styles.css" />
     <link rel="stylesheet" href="./sass/_common.scss" />
     <link rel="stylesheet" href="./sass/modal.scss" />
-    <script type="module" src="./index.js"></script>
+    <script type="module" src="./sass/js/index.js"></script>
   </head>
   <body>
-    <header class="header-container">
-      <div class="navigation-bar">
-        <a href="./index.html" class="logo-container">
-          <svg>
-            <use href="./images/symbol-defs.svg#icon-film"></use>
-          </svg>
-          <span>Filmoteka</span>
-        </a>
-        <nav>
-          <ul class="navigation-tabs">
-            <li>
-              <a href="./index.html" class="link active-link">HOME</a>
-            </li>
-            <li><a href="./my_library.html" class="link">MY LIBRARY</a></li>
-          </ul>
-        </nav>
-        <div class="sliding-mode">
-          <input class="checkbox" type="checkbox" id="darkModeToggle" />
-          <label for="darkModeToggle">
-            <svg class="sun">
-              <use href="./images/symbol-defs.svg#icon-sun"></use>
-            </svg>
-            <svg class="moon">
-              <use href="./images/symbol-defs.svg#icon-moon"></use>
-            </svg>
-          </label>
-        </div>
-      </div>
-      <!-- search form -->
-      <div class="form-container">
-        <form class="search-form" id="search-form">
-          <input
-            type="text"
-            name="searchQuery"
-            autocomplete="off"
-            placeholder="Search movies..."
-          />
-          <button type="submit">
+    <header class="header-background">
+      <section class="header-container">
+        <div class="navigation-bar">
+          <a href="./index.html" class="logo-container">
             <svg>
-              <use href="./images/symbol-defs.svg#icon-search"></use>
+              <use href="./images/symbol-defs.svg#icon-film"></use>
             </svg>
-          </button>
-        </form>
-        <!-- mesajul de eroare -->
-        <span class="error-message"
-          >Search result not successful. Enter the correct movie name and search
-          again</span
-        >
-      </div>
+            <span>Filmoteka</span>
+          </a>
+          <nav>
+            <ul class="navigation-tabs">
+              <li>
+                <a href="./index.html" class="link active-link">HOME</a>
+              </li>
+              <li><a href="./my_library.html" class="link">MY LIBRARY</a></li>
+            </ul>
+          </nav>
+          <div class="sliding-mode">
+            <input class="checkbox" type="checkbox" id="darkModeToggle" />
+            <label for="darkModeToggle">
+              <svg class="sun">
+                <use href="./images/symbol-defs.svg#icon-sun"></use>
+              </svg>
+              <svg class="moon">
+                <use href="./images/symbol-defs.svg#icon-moon"></use>
+              </svg>
+            </label>
+          </div>
+        </div>
+        <!-- search form -->
+        <div class="form-container">
+          <form class="search-form" id="search-form">
+            <input
+              type="text"
+              name="searchQuery"
+              autocomplete="off"
+              placeholder="Search movies..."
+            />
+            <button type="submit">
+              <svg>
+                <use href="./images/symbol-defs.svg#icon-search"></use>
+              </svg>
+            </button>
+          </form>
+          <!-- mesajul de eroare -->
+          <span class="error-message"
+            >Search result not successful. Enter the correct movie name and
+            search again</span
+          >
+        </div>
+      </section>
     </header>
     <main>
       <!-- movie cards -->
@@ -142,8 +144,14 @@
                 </p>
                 <!--watched,queue-->
                 <ul class="list-button">
-                  <li><button class="watched-btn">Add to watched</button></li>
-                  <li><button class="queue-btn">Add to queue</button></li>
+                  <li>
+                    <button class="watched-btn watched-button">
+                      Add to watched
+                    </button>
+                  </li>
+                  <li>
+                    <button class="queue-btn queue-button">Add to queue</button>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -163,6 +171,7 @@
         <use href="./images/symbol-defs.svg#icon-circle-up"></use>
       </svg>
     </button>
-    <script type="module" src="./index.js"></script>
+    <script type="module" src="./sass/js/buttons.js"></script>
+    <script type="module" src="./sass/js/index.js"></script>
   </body>
 </html>

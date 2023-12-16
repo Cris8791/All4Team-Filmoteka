@@ -139,3 +139,22 @@ function showModal2(event) {
   // show modal window
   backdrop2.style.display = 'block';
 }
+document.addEventListener('DOMContentLoaded', () => {
+  const darkModeToggle = document.getElementById('darkModeToggle'),
+    mainSection = document.querySelector('main');
+
+  darkModeToggle.addEventListener('click', () => {
+    toggleDarkMode();
+  });
+
+  function toggleDarkMode() {
+    mainSection.classList.toggle('dark-mode');
+
+    const isDarkMode = mainSection.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode);
+  }
+  const savedDarkMode = localStorage.getItem('darkMode');
+  if (savedDarkMode === 'true') {
+    toggleDarkMode();
+  }
+});
