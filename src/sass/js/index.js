@@ -186,7 +186,7 @@ function processMoviesData(data) {
       movieData.release_year = parseInt(release_date);
       // transform array "genre_ids" in string "genres", property of movieData
       let genre = '';
-      for (i = 0; i < genre_ids.length; i++) {
+      for (let i = 0; i < genre_ids.length; i++) {
         if (i > 0) {
           genre += ', ';
         }
