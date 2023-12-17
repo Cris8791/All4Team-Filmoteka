@@ -19,12 +19,12 @@ function initializeLibrary() {
   clearBtn.innerText = 'CLEAR WATCHED LIST';
   if (watchedList.length > 0) {
     renderMoviesList(watchedList);
+    watchedBtn.style.backgroundColor = '#ff6b08';
   } else {
     const spanElem = document.querySelector('.error-message');
     spanElem.innerText = 'Oops! Your "watched" library is empty!';
   }
   clearBtn.addEventListener('click', clearBtnClick);
-  //   +WATCHED button become active
 }
 function clearBtnClick() {
   if (watchedActive) {
@@ -40,6 +40,8 @@ function clearBtnClick() {
   moviesDivElem.innerHTML = '';
 }
 function watchedBtnClick() {
+  watchedBtn.style.backgroundColor = '#ff6b08';
+  queueBtn.style.backgroundColor = 'transparent';
   watchedActive = true;
   const clearBtn = document.querySelector('.clear-btn');
   clearBtn.innerText = 'CLEAR WATCHED LIST';
@@ -55,6 +57,8 @@ function watchedBtnClick() {
   renderMoviesList(watchedList);
 }
 function queueBtnClick() {
+  queueBtn.style.backgroundColor = '#ff6b08';
+  watchedBtn.style.backgroundColor = 'transparent';
   watchedActive = false;
   const clearBtn = document.querySelector('.clear-btn');
   clearBtn.innerText = 'CLEAR QUEUE LIST';
