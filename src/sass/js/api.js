@@ -12,17 +12,27 @@ async function fetchMovieGenres() {
     return response.data;
   } catch (error) {
     console.error(`Oops! Something went wrong! Error:` + error);
+    const spanElem = document.querySelector('.error-message');
+    spanElem.innerHTML = 'Oops! Something went wrong!';
+    window.scrollTo(0, 0);
   }
 }
 
-async function fetchTrendingMovies() {
+async function fetchTrendingMovies(pageNo) {
   try {
     const response = await axios.get(
-      `${TMDB_URL}/trending/movie/day?api_key=${API_KEY}&${PART1}&${PART2}`
+      `${TMDB_URL}/trending/movie/day?api_key=${API_KEY}&${PART1}&${PART2}&page=${pageNo}`
     );
     return response.data;
   } catch (error) {
     console.error(`Oops! Something went wrong! Error:` + error);
+    const spanElem = document.querySelector('.error-message');
+    spanElem.innerHTML = 'Oops! Something went wrong!';
+    const moviesDivElem = document.querySelector('.movies-div');
+    moviesDivElem.innerHTML = '';
+    const btnsDivElem = document.querySelector('.buttons-div');
+    if (btnsDivElem !== null) btnsDivElem.remove();
+    window.scrollTo(0, 0);
   }
 }
 
@@ -34,6 +44,9 @@ async function fetchSearchedMovies(searchQuery, pageNo) {
     return response.data;
   } catch (error) {
     console.error(`Oops! Something went wrong! Error:` + error);
+    const spanElem = document.querySelector('.error-message');
+    spanElem.innerHTML = 'Oops! Something went wrong!';
+    window.scrollTo(0, 0);
   }
 }
 

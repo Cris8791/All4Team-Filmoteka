@@ -15,15 +15,59 @@ var m;
 function initializeLibrary() {
   watchedList = loadMovieList(WATCHED_KEY);
   queueList = loadMovieList(QUEUE_KEY);
-  renderMoviesList(watchedList);
+  const clearBtn = document.querySelector('.clear-btn');
+  clearBtn.innerText = 'CLEAR WATCHED LIST';
+  if (watchedList.length > 0) {
+    renderMoviesList(watchedList);
+  } else {
+    const spanElem = document.querySelector('.error-message');
+    spanElem.innerText = 'Oops! Your "watched" library is empty!';
+  }
+  clearBtn.addEventListener('click', clearBtnClick);
   //   +WATCHED button become active
+}
+function clearBtnClick() {
+  if (watchedActive) {
+    console.log('clear watched list');
+    watchedList = [];
+    saveMovieList(WATCHED_KEY, watchedList);
+  } else {
+    console.log('clear queue list');
+    queueList = [];
+    saveMovieList(QUEUE_KEY, queueList);
+  }
+  const moviesDivElem = document.querySelector('.movies-div');
+  moviesDivElem.innerHTML = '';
 }
 function watchedBtnClick() {
   watchedActive = true;
+  const clearBtn = document.querySelector('.clear-btn');
+  clearBtn.innerText = 'CLEAR WATCHED LIST';
+  const spanElem = document.querySelector('.error-message');
+  if (watchedList.length === 0) {
+    spanElem.innerText = 'Oops! Your "watched" library is empty!';
+    const moviesDivElem = document.querySelector('.movies-div');
+    moviesDivElem.innerHTML = '';
+    return;
+  } else {
+    spanElem.innerText = '';
+  }
   renderMoviesList(watchedList);
 }
 function queueBtnClick() {
   watchedActive = false;
+  const clearBtn = document.querySelector('.clear-btn');
+  clearBtn.innerText = 'CLEAR QUEUE LIST';
+  const spanElem = document.querySelector('.error-message');
+  if (queueList.length === 0) {
+    spanElem.innerText = 'Oops! Your "queue" library is empty!';
+    const moviesDivElem = document.querySelector('.movies-div');
+    moviesDivElem.innerHTML = '';
+    return;
+  } else {
+    spanElem.innerText = '';
+  }
+
   renderMoviesList(queueList);
 }
 document.addEventListener('DOMContentLoaded', initializeLibrary);
@@ -98,6 +142,7 @@ btnsDivElem2 = document.querySelector('.movdiv2');
 btnsDivElem2.addEventListener('click', showModal2);
 
 function showModal2(event) {
+  if (event.target.nodeName !== 'IMG') return;
   if (watchedActive) {
     movArray = watchedList;
   } else {
@@ -139,22 +184,3 @@ function showModal2(event) {
   // show modal window
   backdrop2.style.display = 'block';
 }
-document.addEventListener('DOMContentLoaded', () => {
-  const darkModeToggle = document.getElementById('darkModeToggle'),
-    mainSection = document.querySelector('main');
-
-  darkModeToggle.addEventListener('click', () => {
-    toggleDarkMode();
-  });
-
-  function toggleDarkMode() {
-    mainSection.classList.toggle('dark-mode');
-
-    const isDarkMode = mainSection.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDarkMode);
-  }
-  const savedDarkMode = localStorage.getItem('darkMode');
-  if (savedDarkMode === 'true') {
-    toggleDarkMode();
-  }
-});

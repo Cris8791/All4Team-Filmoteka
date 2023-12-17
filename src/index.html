@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="./styles.css" />
     <link rel="stylesheet" href="./sass/_common.scss" />
     <link rel="stylesheet" href="./sass/modal.scss" />
-    <script type="module" src="./sass/js/index.js"></script>
+    <!-- <script type="module" src="./sass/js/index.js"></script> -->
   </head>
   <body>
     <header class="header-background">
@@ -67,15 +67,13 @@
             </button>
           </form>
           <!-- mesajul de eroare -->
-          <span class="error-message"
-            >Search result not successful. Enter the correct movie name and
-            search again</span
-          >
+          <span class="error-message"></span>
         </div>
       </section>
     </header>
     <main>
       <!-- movie cards -->
+      <p class="spinner"></p>
       <div class="movies-div"></div>
       <!-- markup for the modal window -->
       <div class="backdrop visually-shown" data-attribute="modal">

@@ -1,6 +1,8 @@
 const WATCHED_KEY = 'filmoteka-watched',
   QUEUE_KEY = 'filmoteka-queue';
 
+let value = '';
+
 function saveMovieList(key, list) {
   value = '';
   list.map(item => {
