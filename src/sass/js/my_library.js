@@ -149,7 +149,7 @@ function showModal2(event) {
     movArray = queueList;
   }
   const imgId = event.target.attributes[0].value;
-  pos = movArray.findIndex(movie => imgId - movie.id === 0);
+  var pos = movArray.findIndex(movie => imgId - movie.id === 0);
   // fill modal content with movie data
   const titleElem = document.querySelector('.title-film');
   const imgElem = document.querySelector('.movie-poster');
