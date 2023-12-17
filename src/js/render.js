@@ -92,7 +92,8 @@ function renderPaginationButtons(crtPage, totalPages) {
   const currentBtn = document.querySelector(
     `.buttons-div :nth-child(${crtBtn})`
   );
-  currentBtn.style.backgroundColor = '#FF6B01';
+  currentBtn.classList.add('active');
+
   lftarwBtn.style.backgroundColor = '#F7F7F7';
   rgtarwBtn.style.backgroundColor = '#F7F7F7';
 

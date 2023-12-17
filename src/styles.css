@@ -111,10 +111,17 @@ img {
   stroke: var(--orange-color);
 }
 .header-button:hover,
-.header-button:focus {
+.header-button:focus,
+.clear-btn:hover,
+.clear-btn:focus {
   background-color: var(--orange-color);
   border-color: var(--orange-color);
   box-shadow: 0px 8px 43px 0px rgba(255, 107, 1, 0.6);
+  transform: scale(1.1);
+}
+.header-button.active {
+  background-color: #ff6b08;
+  border-color: #ff6b08;
 }
 .search-form:hover,
 .search-form:focus {
@@ -217,7 +224,20 @@ footer.footer-container {
   background: transparent;
   border-radius: 5px;
   cursor: pointer;
-  transition: 0.25s;
+  transition: transform 0.25s;
+}
+.clear-btn {
+  width: 252px;
+  flex-grow: 1;
+  color: var(--light-color);
+  border: 1px solid var(--light-color);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  background: transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.25s;
 }
 main {
   width: 100%;
@@ -314,7 +334,6 @@ input:checked + label svg.moon {
   align-items: center;
   gap: 10px;
 }
-
 .buttons-div button {
   height: 40px;
   width: 40px;
@@ -328,7 +347,11 @@ input:checked + label svg.moon {
   border-radius: 5px;
   transition: background-color 0.3s;
 }
-@media screen and (min-width: 321px) {
+.buttons-div button.active {
+  background-color: var(--orange-color);
+  color: var(--light-color) !important;
+}
+@media (min-width: 768px) {
   .header-background {
     background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
       url(./images/background-image-tablet.png);
@@ -406,7 +429,7 @@ input:checked + label svg.moon {
     width: 136px;
   }
 }
-@media screen and (min-width: 769px) {
+@media (min-width: 1024px) {
   .header-background {
     background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
       url(./images/background-image-desktop.png);
@@ -440,6 +463,9 @@ input:checked + label svg.moon {
   .movies-div {
     grid-template-columns: repeat(3, 1fr);
     padding: 60px 71px 50px 71px;
+  }
+  .clear-btn {
+    width: 280px;
   }
 }
 
