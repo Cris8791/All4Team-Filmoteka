@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  toSearchFormButton = document.querySelector('.to-search-form');
+  const toSearchFormButton = document.querySelector('.to-search-form');
   toSearchFormButton.addEventListener('click', () => {
     window.scrollTo({
       top: 0,
