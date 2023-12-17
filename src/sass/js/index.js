@@ -206,6 +206,9 @@ function processMoviesData(data) {
     }
   );
   totalPages = data.total_pages;
+  if (totalPages > 300) {
+    totalPages = 250;
+  }
 }
 async function initializePage() {
   showSpinner();
