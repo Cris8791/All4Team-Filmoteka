@@ -11,11 +11,11 @@ import {
   loadMovieList,
 } from './storage.js';
 
-var pageData = {
-    crtPage: 0,
-    totalPages: 0,
-    totalResults: 0,
-  },
+var crtPage = 0,
+  totalPages = 0,
+  totalResults = 0,
+  trending = true,
+  searchQuery = '',
   listOfGenres,
   movieData = {
     id: 0,
@@ -34,7 +34,17 @@ var pageData = {
   watchedList = [],
   queueList = [];
 
-//
+// spinner section
+const spinnerElem = document.querySelector('.spinner');
+// hideSpinner();
+function hideSpinner() {
+  spinnerElem.style.display = 'none';
+}
+function showSpinner() {
+  spinnerElem.style.display = 'block';
+}
+// end of spinner section
+
 // modal section
 const closeModalButton = document.getElementById('closeModalBtn');
 const backdrop = document.querySelector('.backdrop.visually-shown');
@@ -58,7 +68,6 @@ watchedBtn.addEventListener('click', watchedBtnClick);
 queueBtn.addEventListener('click', queueBtnClick);
 
 function watchedBtnClick() {
-  console.log('watched clicked');
   if (movieArray[pos].watched) {
     movieArray[pos].watched = false;
     watchedBtn.innerHTML = 'Add to watched';
@@ -74,7 +83,6 @@ function watchedBtnClick() {
   saveMovieList(WATCHED_KEY, watchedList);
 }
 function queueBtnClick() {
-  console.log('queue clicked');
   if (movieArray[pos].queued) {
     movieArray[pos].queued = false;
     queueBtn.innerHTML = 'Add to queue';
@@ -95,23 +103,49 @@ function queueBtnClick() {
 const searchForm = document.querySelector('.search-form'),
   inputElem = document.querySelector('form>input');
 
-async function renderSearchedMovies(text) {
-  const result = await fetchSearchedMovies(text, 1);
+async function renderTrendingMovies() {
+  const result = await fetchTrendingMovies(crtPage);
+  const spanElem = document.querySelector('.error-message');
+  if (spanElem.innerHTML !== '') return;
   processMoviesData(result);
+  trending = true;
   renderMoviesList(movieArray);
+  renderPaginationButtons(crtPage, totalPages);
+  hideSpinner();
+  const pagContainer = document.querySelector('.buttons-div');
+  pagContainer.addEventListener('click', pageSelector);
+  window.scrollTo(0, 0);
+}
+async function renderSearchedMovies(text) {
+  const result = await fetchSearchedMovies(text, crtPage);
+  const spanElem = document.querySelector('.error-message');
+  if (result.total_results === 0) {
+    spanElem.innerText =
+      'Search result not successful. Enter the correct movie name and search again';
+  } else {
+    spanElem.innerText = '';
+  }
+  processMoviesData(result);
+  trending = false;
+  renderMoviesList(movieArray);
+  renderPaginationButtons(crtPage, totalPages);
+  if (totalPages > 1) {
+    const pagContainer = document.querySelector('.buttons-div');
+    pagContainer.addEventListener('click', pageSelector);
+  }
+  window.scrollTo(0, 0);
 }
 function onSearch(element) {
   element.preventDefault();
-  const searchQuery = inputElem.value.trim();
+  searchQuery = inputElem.value.trim();
   if (searchQuery === '') {
-    console.log('BOTIFY: Please, fill the main field');
+    console.log('NOTIFY: Please, fill the main field');
     return;
   }
+  inputElem.value = '';
   movieArray = [];
+  crtPage = 1;
   renderSearchedMovies(searchQuery);
-  //********************** ATENTIE la nr de pagini rezultate! Trebuie sa actualizez si nr.de pagini venit de la API */
-  //********************** ATENTIE la nr de pagini rezultate! Trebuie sa actualizez si nr.de pagini venit de la API */
-  //********************** ATENTIE la nr de pagini rezultate! Trebuie sa actualizez si nr.de pagini venit de la API */
 }
 
 searchForm.addEventListener('submit', onSearch);
@@ -141,8 +175,14 @@ function processMoviesData(data) {
         vote_average,
         vote_count,
       };
-      movieData.poster_path =
-        'https://www.themoviedb.org/t/p/w500' + poster_path;
+      if (poster_path === null) {
+        movieData.poster_path =
+          'https://dummyimage.com/395x574/000/fff.jpg&amp;text=no+poster';
+      } else {
+        movieData.poster_path =
+          'https://www.themoviedb.org/t/p/w500' + poster_path;
+      }
+
       movieData.release_year = parseInt(release_date);
       // transform array "genre_ids" in string "genres", property of movieData
       let genre = '';
@@ -168,8 +208,7 @@ function processMoviesData(data) {
   totalPages = data.total_pages;
 }
 async function initializePage() {
-  //put the spinner until the initialize is done
-  //******TO DO ******/
+  showSpinner();
 
   //read the movies in library (if there are some)
   watchedList = loadMovieList(WATCHED_KEY);
@@ -180,19 +219,23 @@ async function initializePage() {
   listOfGenres = listOfGen.genres;
 
   //fetch movies for landing page
-  const result = await fetchTrendingMovies();
+  crtPage = 1;
+  trending = true;
+  const result = await fetchTrendingMovies(crtPage);
   processMoviesData(result);
 
   renderMoviesList(movieArray);
-  renderPaginationButtons(1, totalPages);
-
-  // **************
-  // console.log('1 movieArray= ', movieArray);
-  btnsDivElem = document.querySelector('.movies-div');
-  btnsDivElem.addEventListener('click', showModal);
+  const moviesDivElem = document.querySelector('.movies-div');
+  moviesDivElem.addEventListener('click', showModal);
+  crtPage = 1;
+  renderPaginationButtons(crtPage, totalPages);
+  const pagContainer = document.querySelector('.buttons-div');
+  pagContainer.addEventListener('click', pageSelector);
+  hideSpinner();
 }
 
 function showModal(event) {
+  if (event.target.nodeName !== 'IMG') return;
   const imgId = event.target.attributes[0].value;
   pos = movieArray.findIndex(movie => imgId - movie.id === 0);
   // fill modal content with movie data
@@ -208,8 +251,6 @@ function showModal(event) {
   let m = movieArray[pos];
   titleElem.innerHTML = m.title;
   imgElem.src = m.poster_path;
-  // ************
-  // !!!!!!!!!!!! imaginea tb stilizata
   voteElem.innerHTML = m.vote_average;
   votesElem.innerHTML = ' / ' + m.vote_count;
   popularityElem.innerHTML = m.popularity;
@@ -231,33 +272,27 @@ function showModal(event) {
   // show modal window
   backdrop.style.display = 'block';
 }
+function pageSelector() {
+  let pageNo = crtPage;
+  let btnTxt = event.target.innerText;
+  if (btnTxt === '...') return;
+  switch (btnTxt) {
+    case '←':
+      pageNo--;
+      break;
+    case '→':
+      pageNo++;
+      break;
+    default:
+      pageNo = Number(btnTxt);
+  }
+  crtPage = pageNo;
+  if (trending) {
+    movieArray = [];
+    renderTrendingMovies();
+  } else {
+    movieArray = [];
+    renderSearchedMovies(searchQuery);
+  }
+}
 initializePage();
-
-document.addEventListener('DOMContentLoaded', () => {
-  toSearchFormButton = document.querySelector('.to-search-form');
-  toSearchFormButton.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  });
-});
-document.addEventListener('DOMContentLoaded', () => {
-  const darkModeToggle = document.getElementById('darkModeToggle'),
-    mainSection = document.querySelector('main');
-
-  darkModeToggle.addEventListener('click', () => {
-    toggleDarkMode();
-  });
-
-  function toggleDarkMode() {
-    mainSection.classList.toggle('dark-mode');
-
-    const isDarkMode = mainSection.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDarkMode);
-  }
-  const savedDarkMode = localStorage.getItem('darkMode');
-  if (savedDarkMode === 'true') {
-    toggleDarkMode();
-  }
-});

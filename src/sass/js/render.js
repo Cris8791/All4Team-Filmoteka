@@ -14,6 +14,9 @@ function renderMoviesList(list) {
 }
 
 function renderPaginationButtons(crtPage, totalPages) {
+  const btnsDivElem = document.querySelector('.buttons-div');
+  if (btnsDivElem !== null) btnsDivElem.remove();
+
   // pag.crt
   // 1 -> se vad        1,2,3,...,total,rgtarw
   // 2 -> se vad lftarw,1,2,3,4,...,total,rgtarw
@@ -72,18 +75,29 @@ function renderPaginationButtons(crtPage, totalPages) {
   //hide the proper buttons
   if (crtPage >= 1 && crtPage <= 4) {
     lftdotBtn.style.display = 'none';
-    crtBtn = crtPage + 1;
+    crtBtn = crtPage + 2;
   }
   if (crtPage === 1) {
     lftarwBtn.style.display = 'none';
-    crtBtn = 1;
+    crtBtn = 2;
   }
   if (crtPage > 4) crtBtn = 6;
   if (totalPages - maxPage < 2) rgtdotBtn.style.display = 'none';
-  if (crtPage === totalPages) rgtarwBtn.style.display = 'none';
+  if (crtPage === totalPages) {
+    rgtarwBtn.style.display = 'none';
+    crtBtn = 7;
+  }
 
-  //select the pagination container element for next actions
-  const pagContainer = document.querySelector('.buttons-div');
+  //adding style to current page button
+  const currentBtn = document.querySelector(
+    `.buttons-div :nth-child(${crtBtn})`
+  );
+  currentBtn.style.backgroundColor = '#b92f2c';
+
+  // const pagContainer = document.querySelector('.buttons-div');
+  // console.log(pagContainer);
+  // console.log(currentBtn);
+  // console.log(crtBtn);
 }
 
 export { renderMoviesList, renderPaginationButtons };
