@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   const darkModeToggle = document.getElementById('darkModeToggle'),
     bodySection = document.querySelector('body');
-  mainSection = document.querySelector('main');
+  const mainSection = document.querySelector('main');
 
   darkModeToggle.addEventListener('click', () => {
     toggleDarkMode();
