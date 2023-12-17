@@ -9,13 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 document.addEventListener('DOMContentLoaded', () => {
   const darkModeToggle = document.getElementById('darkModeToggle'),
-    mainSection = document.querySelector('main');
+    bodySection = document.querySelector('body');
+  mainSection = document.querySelector('main');
 
   darkModeToggle.addEventListener('click', () => {
     toggleDarkMode();
   });
 
   function toggleDarkMode() {
+    bodySection.classList.toggle('dark-mode');
     mainSection.classList.toggle('dark-mode');
 
     const isDarkMode = mainSection.classList.contains('dark-mode');
