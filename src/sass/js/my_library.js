@@ -138,7 +138,7 @@ function queueBtnClick2() {
   }
 }
 // end of modal section
-btnsDivElem2 = document.querySelector('.movdiv2');
+const btnsDivElem2 = document.querySelector('.movdiv2');
 btnsDivElem2.addEventListener('click', showModal2);
 
 function showModal2(event) {
