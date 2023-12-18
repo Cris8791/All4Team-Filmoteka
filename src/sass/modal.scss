@@ -269,7 +269,7 @@ ul {
 }
 @media (min-width: 768px) {
   .modal {
-    width: 806px;
+    width: 714px;
     height: 558px;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -321,6 +321,11 @@ ul {
     font-size: 12px;
     font-weight: 600;
     margin-right: 1px;
+  }
+}
+@media (min-width: 1024px) {
+  .modal {
+    width: 806px;
   }
 }
 
