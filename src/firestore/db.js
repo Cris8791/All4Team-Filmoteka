@@ -1,7 +1,7 @@
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import { app } from './firebase_config.js';
 // import { watchedMocieList, queuedMovieList } from '';
-import { DeviceUUID } from '../../node_modules/device-uuid/lib/device-uuid.js';
+import { DeviceUUID } from 'device-uuid/lib/device-uuid.js';
 
 const db = getFirestore(app);
 const deviceID = new DeviceUUID().get();

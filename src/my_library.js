@@ -9,7 +9,7 @@ import {
   uploadWatchedQueuedMoviesToDB,
   downloadWatchedQueuedMoviesFromDB,
   getMovies,
-} from './js/db.js';
+} from './firestore/db.js';
 
 var watchedList = [],
   queueList = [],
