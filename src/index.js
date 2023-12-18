@@ -10,6 +10,11 @@ import {
   saveMovieList,
   loadMovieList,
 } from './storage.js';
+import {
+  uploadWatchedQueuedMoviesToDB,
+  downloadWatchedQueuedMoviesFromDB,
+  getMovies,
+} from './js/db.js';
 
 var pageData = {
     crtPage: 0,
@@ -72,6 +77,9 @@ function watchedBtnClick() {
     watchedBtn.innerHTML = 'Remove from watched';
   }
   saveMovieList(WATCHED_KEY, watchedList);
+  // upload the list of watched movies to the firestore database
+  uploadWatchedQueuedMoviesToDB('watched', watchedList);
+  //------------------------------------------------------
 }
 function queueBtnClick() {
   console.log('queue clicked');
@@ -88,6 +96,9 @@ function queueBtnClick() {
     queueBtn.innerHTML = 'Remove from queue';
   }
   saveMovieList(QUEUE_KEY, queueList);
+  //upload the list of queued movies to the firestore database
+  uploadWatchedQueuedMoviesToDB('queued', queueList);
+  //----------------------------------------------------
 }
 // end of modal section
 
@@ -174,6 +185,28 @@ async function initializePage() {
   //read the movies in library (if there are some)
   watchedList = loadMovieList(WATCHED_KEY);
   queueList = loadMovieList(QUEUE_KEY);
+
+  // download the list of watched and queued movies from the firestore database
+  // try {
+  //   const accessDB = await downloadWatchedQueuedMoviesFromDB();
+  //   const takeItem = getMovies.data();
+  //   // debugger;
+  //   if (takeItem.lenght === undefined) {
+  //     return;
+  //   }
+  //   // console.log(getMovies.data().queuedMovies);
+  //   watchedList = takeItem.watchedMovies;
+  //   queueList = takeItem.queuedMovies;
+  //   console.log(
+  //     'The server returned the following lists of watched movies: ',
+  //     watchedList,
+  //     'and queued movies: ',
+  //     queueList
+  //   );
+  // } catch (error) {
+  //   console.log("I didn't get any results, because: ", error.message);
+  // }
+  // ----------------------------------------------------------------------
 
   //fetch movie genres and put the result in listOfGenres
   const listOfGen = await fetchMovieGenres();

@@ -5,6 +5,11 @@ import {
   saveMovieList,
   loadMovieList,
 } from './storage.js';
+import {
+  uploadWatchedQueuedMoviesToDB,
+  downloadWatchedQueuedMoviesFromDB,
+  getMovies,
+} from './js/db.js';
 
 var watchedList = [],
   queueList = [],
@@ -12,9 +17,60 @@ var watchedList = [],
   watchedActive = true;
 var m;
 
-function initializeLibrary() {
-  watchedList = loadMovieList(WATCHED_KEY);
-  queueList = loadMovieList(QUEUE_KEY);
+function waitingResponse() {
+  const requestDataAfterOneSec = new Promise(resolve => {
+    setTimeout(() => {
+      resolve(takeItem());
+    }, 1000);
+  });
+}
+
+async function initializeLibrary() {
+  // watchedList = loadMovieList(WATCHED_KEY);
+  // queueList = loadMovieList(QUEUE_KEY);
+  // console.log(watchedList);
+  // console.log(queueList);
+
+  const accessDB = downloadWatchedQueuedMoviesFromDB();
+
+  const responseReceived = await waitingResponse();
+}
+
+function takeItem() {
+  const pickList = getMovies.data();
+  console.log(pickList);
+  // debugger;
+  const pickListLength = Object.keys(pickList).length;
+  const queuedMoviesLenght = pickList.queuedMovies.length;
+  const watchedMoviesLenght = pickList.watchedMovies.length;
+  const firstMovieWatched = pickList.watchedMovies[0];
+  const firstMovieQueued = pickList.queuedMovies[0];
+  console.log(pickList.watchedMovies[0]);
+  if (pickListLength === 0) {
+    watchedList = [];
+    queueList = [];
+  }
+  // debugger;
+  if (queuedMoviesLenght !== 0) {
+    if (firstMovieQueued !== '[]') {
+      const queuedListText = pickList.queuedMovies[0];
+      queueList = JSON.parse(queuedListText);
+    }
+  }
+  if (watchedMoviesLenght !== 0) {
+    if (firstMovieWatched !== '[]') {
+      const watchedListText = pickList.watchedMovies[0];
+      watchedList = JSON.parse(watchedListText);
+    }
+  }
+  console.log(
+    'The server returned the following lists of watched movies: ',
+    watchedList,
+    'and queued movies: ',
+    queueList
+  );
+  //----------------------------------------------------------------------
+
   renderMoviesList(watchedList);
   //   +WATCHED button become active
 }
@@ -69,6 +125,11 @@ function watchedBtnClick2() {
     watchedList.push(m);
   }
   saveMovieList(WATCHED_KEY, watchedList);
+
+  // upload the list of watched movies to the firestore database
+  uploadWatchedQueuedMoviesToDB('watched', watchedList);
+  //------------------------------------------------------
+
   if (watchedActive) {
     renderMoviesList(watchedList);
   } else {
@@ -87,6 +148,11 @@ function queueBtnClick2() {
     queueList.push(m);
   }
   saveMovieList(QUEUE_KEY, queueList);
+
+  //upload the list of queued movies to the firestore database
+  uploadWatchedQueuedMoviesToDB('queued', queueList);
+  //----------------------------------------------------
+
   if (watchedActive) {
     renderMoviesList(watchedList);
   } else {
