@@ -17,14 +17,7 @@ var watchedList = [],
   watchedActive = true;
 var m;
 
-function waitingResponse() {
-  const requestDataAfterOneSec = new Promise(resolve => {
-    setTimeout(() => {
-      resolve(takeItem());
-    }, 1000);
-  });
-}
-
+// set the values ​​stored in the database in the lists of watched movies and put them in the queue
 async function initializeLibrary() {
   // watchedList = loadMovieList(WATCHED_KEY);
   // queueList = loadMovieList(QUEUE_KEY);
@@ -32,43 +25,57 @@ async function initializeLibrary() {
   // console.log(queueList);
 
   const accessDB = downloadWatchedQueuedMoviesFromDB();
+  const returnedResponse = await waitingResponse();
+}
 
-  const responseReceived = await waitingResponse();
+function waitingResponse() {
+  const taskResolved = new Promise(resolve => {
+    setTimeout(() => {
+      resolve(takeItem());
+    }, 1000);
+  });
 }
 
 function takeItem() {
-  const pickList = getMovies.data();
-  console.log(pickList);
-  // debugger;
-  const pickListLength = Object.keys(pickList).length;
-  const queuedMoviesLenght = pickList.queuedMovies.length;
-  const watchedMoviesLenght = pickList.watchedMovies.length;
-  const firstMovieWatched = pickList.watchedMovies[0];
-  const firstMovieQueued = pickList.queuedMovies[0];
-  console.log(pickList.watchedMovies[0]);
-  if (pickListLength === 0) {
-    watchedList = [];
-    queueList = [];
-  }
-  // debugger;
-  if (queuedMoviesLenght !== 0) {
-    if (firstMovieQueued !== '[]') {
-      const queuedListText = pickList.queuedMovies[0];
-      queueList = JSON.parse(queuedListText);
+  try {
+    const pickList = getMovies.data();
+    console.log(pickList);
+    // debugger;
+    const pickListLength = Object.keys(pickList).length;
+    const queuedMoviesLenght = pickList.queuedMovies.length;
+    const watchedMoviesLenght = pickList.watchedMovies.length;
+    const firstMovieWatched = pickList.watchedMovies[0];
+    const firstMovieQueued = pickList.queuedMovies[0];
+    console.log(pickList.watchedMovies[0]);
+    if (pickListLength === 0) {
+      watchedList = [];
+      queueList = [];
     }
-  }
-  if (watchedMoviesLenght !== 0) {
-    if (firstMovieWatched !== '[]') {
-      const watchedListText = pickList.watchedMovies[0];
-      watchedList = JSON.parse(watchedListText);
+    // debugger;
+    if (queuedMoviesLenght !== 0) {
+      if (firstMovieQueued !== '[]') {
+        const queuedListText = pickList.queuedMovies[0];
+        queueList = JSON.parse(queuedListText);
+      }
     }
+    if (watchedMoviesLenght !== 0) {
+      if (firstMovieWatched !== '[]') {
+        const watchedListText = pickList.watchedMovies[0];
+        watchedList = JSON.parse(watchedListText);
+      }
+    }
+    console.log(
+      'You movies saved in watched are: ',
+      watchedList,
+      'and queued are: ',
+      queueList
+    );
+  } catch (error) {
+    console.log(
+      `I couldn't load the data from the database, because: `,
+      error.message
+    );
   }
-  console.log(
-    'The server returned the following lists of watched movies: ',
-    watchedList,
-    'and queued movies: ',
-    queueList
-  );
   //----------------------------------------------------------------------
 
   renderMoviesList(watchedList);
