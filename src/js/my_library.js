@@ -15,11 +15,11 @@ var m;
 function initializeLibrary() {
   watchedList = loadMovieList(WATCHED_KEY);
   queueList = loadMovieList(QUEUE_KEY);
+  setActiveStyles(watchedBtn);
   const clearBtn = document.querySelector('.clear-btn');
   clearBtn.innerText = 'CLEAR WATCHED LIST';
   if (watchedList.length > 0) {
     renderMoviesList(watchedList);
-    watchedBtn.style.backgroundColor = '#ff6b08';
   } else {
     const spanElem = document.querySelector('.error-message');
     spanElem.innerText = 'Oops! Your "watched" library is empty!';
@@ -39,9 +39,16 @@ function clearBtnClick() {
   const moviesDivElem = document.querySelector('.movies-div');
   moviesDivElem.innerHTML = '';
 }
+function setActiveStyles(element) {
+  element.classList.add('active');
+}
+
+function removeActiveStyles(element) {
+  element.classList.remove('active');
+}
 function watchedBtnClick() {
-  watchedBtn.style.backgroundColor = '#ff6b08';
-  queueBtn.style.backgroundColor = 'transparent';
+  setActiveStyles(watchedBtn);
+  removeActiveStyles(queueBtn);
   watchedActive = true;
   const clearBtn = document.querySelector('.clear-btn');
   clearBtn.innerText = 'CLEAR WATCHED LIST';
@@ -57,8 +64,8 @@ function watchedBtnClick() {
   renderMoviesList(watchedList);
 }
 function queueBtnClick() {
-  queueBtn.style.backgroundColor = '#ff6b08';
-  watchedBtn.style.backgroundColor = 'transparent';
+  setActiveStyles(queueBtn);
+  removeActiveStyles(watchedBtn);
   watchedActive = false;
   const clearBtn = document.querySelector('.clear-btn');
   clearBtn.innerText = 'CLEAR QUEUE LIST';
@@ -81,7 +88,6 @@ const queueBtn = document.querySelector('.queue-btn');
 watchedBtn.addEventListener('click', watchedBtnClick);
 queueBtn.addEventListener('click', queueBtnClick);
 
-//
 // modal section
 const closeModalButton2 = document.getElementById('closeModalBtn2');
 const backdrop2 = document.querySelector('.bckdrp');
