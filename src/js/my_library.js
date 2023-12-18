@@ -5,6 +5,11 @@ import {
   saveMovieList,
   loadMovieList,
 } from './storage.js';
+import {
+  uploadWatchedQueuedMoviesToDB,
+  downloadWatchedQueuedMoviesFromDB,
+  itemAccess,
+} from './db.js';
 
 var watchedList = [],
   queueList = [],
@@ -12,9 +17,82 @@ var watchedList = [],
   watchedActive = true;
 var m;
 
+// set the values ​​stored in the database in the lists of watched movies and put them in the queue
+async function setStoredValues() {
+  downloadWatchedQueuedMoviesFromDB();
+  await new Promise(resolve => {
+    setTimeout(() => {
+      resolve(takeItem());
+    }, 1000);
+  });
+}
+
+function takeItem() {
+  try {
+    const itemData = itemAccess.data();
+    console.log(itemData);
+    const itemDataLength = Object.keys(itemData).length;
+    console.log(itemDataLength);
+    if (itemDataLength === 0) {
+      // debugger;
+      initializeLibrary();
+      return;
+    }
+    const pickedMoviesTextified = itemData.movies;
+    const pickedMovies = JSON.parse(pickedMoviesTextified);
+    console.log(pickedMovies);
+    // debugger;
+    // const pickListLength = Object.keys(pickList).length;
+    // const queuedMoviesLenght = pickList.queuedMovies.length;
+    // const watchedMoviesLenght = pickList.watchedMovies.length;
+    // const firstMovieWatched = pickList.watchedMovies[0];
+    // const firstMovieQueued = pickList.queuedMovies[0];
+    // console.log(pickList.watchedMovies[0]);
+    // if (pickListLength === 0) {
+    //   watchedList = [];
+    //   queueList = [];
+    // }
+    // debugger;
+    // if (queuedMoviesLenght !== 0) {
+    //   if (firstMovieQueued !== '[]') {
+    //     const queuedListText = pickList.queuedMovies[0];
+    //     queueList = JSON.parse(queuedListText);
+    //   }
+    // }
+    // if (watchedMoviesLenght !== 0) {
+    //   if (firstMovieWatched !== '[]') {
+    //     const watchedListText = pickList.watchedMovies[0];
+    //     watchedList = JSON.parse(watchedListText);
+    //   }
+    // }
+    let moviesWatched = [];
+    let moviesQueued = [];
+    pickedMovies.forEach(movie => {
+      if (movie.watched === true) {
+        moviesWatched.push(movie);
+      }
+      if (movie.queued === true) {
+        moviesQueued.push(movie);
+      }
+    });
+    watchedList = moviesWatched;
+    queueList = moviesQueued;
+    initializeLibrary();
+    console.log(
+      'You movies saved in watched are:',
+      watchedList,
+      'and queued are: ',
+      queueList
+    );
+  } catch (error) {
+    console.log(`I couldn't load the data from the database, because: `, error);
+  }
+}
+
 function initializeLibrary() {
-  watchedList = loadMovieList(WATCHED_KEY);
-  queueList = loadMovieList(QUEUE_KEY);
+  // debugger;
+  // watchedList = loadMovieList(WATCHED_KEY);
+  // queueList = loadMovieList(QUEUE_KEY);
   setActiveStyles(watchedBtn);
   const clearBtn = document.querySelector('.clear-btn');
   clearBtn.innerText = 'CLEAR WATCHED LIST';
@@ -26,6 +104,7 @@ function initializeLibrary() {
   }
   clearBtn.addEventListener('click', clearBtnClick);
 }
+
 function clearBtnClick() {
   if (watchedActive) {
     console.log('clear watched list');
@@ -46,6 +125,7 @@ function setActiveStyles(element) {
 function removeActiveStyles(element) {
   element.classList.remove('active');
 }
+
 function watchedBtnClick() {
   setActiveStyles(watchedBtn);
   removeActiveStyles(queueBtn);
@@ -81,7 +161,7 @@ function queueBtnClick() {
 
   renderMoviesList(queueList);
 }
-document.addEventListener('DOMContentLoaded', initializeLibrary);
+document.addEventListener('DOMContentLoaded', setStoredValues);
 const watchedBtn = document.querySelector('.watched-btn');
 const queueBtn = document.querySelector('.queue-btn');
 
@@ -115,14 +195,32 @@ function watchedBtnClick2() {
   if (m.watched) {
     m.watched = false;
     watchedBtn2.innerHTML = 'Add to watched';
-    let extractPos = watchedList.findIndex(movie => movie.id === m.id);
-    watchedList.splice(extractPos, 1);
+    // let extractPos = watchedList.findIndex(movie => movie.id === m.id);
+    // watchedList.splice(extractPos, 1);
   } else {
     watchedBtn2.innerHTML = 'Remove from watched';
     m.watched = true;
-    watchedList.push(m);
+    if (watchedList.length !== 0) {
+      watchedList.forEach(movie => {
+        console.log(movie.id);
+        console.log(m.id);
+        if (m.id === movie.id) {
+          console.log('the movie is already in the list');
+          watchedBtn.innerHTML = 'Remove from watched';
+          return;
+        }
+        watchedList.push(m);
+        watchedBtn.innerHTML = 'Remove from watched';
+      });
+    } else {
+      watchedList.push(m);
+      watchedBtn.innerHTML = 'Remove from watched';
+    }
   }
-  saveMovieList(WATCHED_KEY, watchedList);
+  // saveMovieList(WATCHED_KEY, watchedList);
+  // upload the list of watched movies to the firestore database
+  uploadWatchedQueuedMoviesToDB(watchedList);
+  //------------------------------------------------------
   if (watchedActive) {
     renderMoviesList(watchedList);
   } else {
@@ -133,14 +231,32 @@ function queueBtnClick2() {
   if (m.queued) {
     m.queued = false;
     queueBtn2.innerHTML = 'Add to queue';
-    let extractPos = queueList.findIndex(movie => movie.id === m.id);
-    queueList.splice(extractPos, 1);
+    // let extractPos = queueList.findIndex(movie => movie.id === m.id);
+    // queueList.splice(extractPos, 1);
   } else {
     queueBtn2.innerHTML = 'Remove from queue';
     m.queued = true;
-    queueList.push(m);
+    if (queueList.length !== 0) {
+      queueList.forEach(movie => {
+        console.log(movie.id);
+        console.log(m);
+        if (m.id === movie.id) {
+          console.log('the movie is already in the list');
+          queueBtn.innerHTML = 'Remove from watched';
+          return;
+        }
+        queueList.push(m);
+        queueBtn.innerHTML = 'Remove from watched';
+      });
+    } else {
+      queueList.push(m);
+      queueBtn.innerHTML = 'Remove from watched';
+    }
   }
-  saveMovieList(QUEUE_KEY, queueList);
+  // saveMovieList(QUEUE_KEY, queueList);
+  //upload the list of queued movies to the firestore database
+  uploadWatchedQueuedMoviesToDB(queueList);
+  //----------------------------------------------------
   if (watchedActive) {
     renderMoviesList(watchedList);
   } else {
