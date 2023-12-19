@@ -116,11 +116,13 @@ function clearBtnClick() {
   if (watchedActive) {
     console.log('clear watched list');
     watchedList = [];
-    saveMovieList(WATCHED_KEY, watchedList);
+    // saveMovieList(WATCHED_KEY, watchedList);
+    uploadWatchedQueuedMoviesToDB('watched', watchedList);
   } else {
     console.log('clear queue list');
     queueList = [];
-    saveMovieList(QUEUE_KEY, queueList);
+    // saveMovieList(QUEUE_KEY, queueList);
+    uploadWatchedQueuedMoviesToDB('queued', queueList);
   }
   const moviesDivElem = document.querySelector('.movies-div');
   moviesDivElem.innerHTML = '';
