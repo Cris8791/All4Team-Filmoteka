@@ -150,7 +150,7 @@ const uploadWatchedQueuedMoviesToDB = async function setItem(
     await setDoc(itemPath, watchedQueuedMovies);
     console.log(
       'The list of added watched movies is: ',
-      eatchedQueuedMovies.watchedMovies,
+      watchedQueuedMovies.watchedMovies,
       ' and queued is: ',
       watchedQueuedMovies.queuedMovies
     );
