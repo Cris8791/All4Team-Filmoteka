@@ -411,6 +411,7 @@ async function initializePage() {
 
 function showModal(event) {
   // debugger;
+  // if()
   if (event.target.nodeName !== 'IMG') return;
   const imgId = event.target.attributes[0].value;
   pos = movieArray.findIndex(movie => imgId - movie.id === 0);
