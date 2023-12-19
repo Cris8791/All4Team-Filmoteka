@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filmoteka</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./sass/modal.scss" />
+  </head>
+  <body>
+    <header class="my-library-header-background">
+      <section class="header-container">
+        <div class="navigation-bar">
+          <a href="./index.html" class="logo-container">
+            <svg>
+              <use href="./images/symbol-defs.svg#icon-film"></use>
+            </svg>
+            <span>Filmoteka</span>
+          </a>
+          <nav>
+            <ul class="navigation-tabs">
+              <li>
+                <a href="./index.html" class="link">HOME</a>
+              </li>
+              <li>
+                <a href="./my_library.html" class="link active-link"
+                  >MY LIBRARY</a
+                >
+              </li>
+            </ul>
+          </nav>
+          <div class="sliding-mode">
+            <input class="checkbox" type="checkbox" id="darkModeToggle" />
+            <label for="darkModeToggle">
+              <svg class="sun">
+                <use href="./images/symbol-defs.svg#icon-sun"></use>
+              </svg>
+              <svg class="moon">
+                <use href="./images/symbol-defs.svg#icon-moon"></use>
+              </svg>
+            </label>
+          </div>
+        </div>
+        <div class="all-buttons-container">
+          <div class="buttons-container">
+            <button class="watched-btn header-button">WATCHED</button>
+            <button class="queue-btn header-button">QUEUE</button>
+          </div>
+          <button class="clear-btn">CLEAR</button>
+        </div>
+      </section>
+    </header>
+    <main>
+      <p class="error-message"></p>
+      <div class="movies-div movdiv2"></div>
+      <!-- markup for the modal window -->
+      <div class="backdrop visually-shown bckdrp" data-attribute="modal">
+        <div class="overlay" id="overlay"></div>
+        <div class="modal" id="modal">
+          <div class="modal-header">
+            <span class="close" id="closeModalBtn2">&times;</span>
+            <div class="movie-info-container">
+              <div class="modal-block-image">
+                <img
+                  class="movie-poster image-modal"
+                  src="./images/Rectangle 18.png"
+                  alt="movie poster"
+                />
+              </div>
+              <div class="all-informations-container">
+                <h2 class="title-film">A FISTFUL OF LEAD</h2>
+
+                <div class="info-film">
+                  <ul class="list film-info__names">
+                    <li class="film-info_name">
+                      <p class="content-list__item">Vote/Votes</p>
+                    </li>
+                    <li class="film-info_name">
+                      <p class="content-list__item">Popularity</p>
+                    </li>
+                    <li class="film-info_name">
+                      <p class="content-list__item">Original Title</p>
+                    </li>
+                    <li class="film-info_name">
+                      <p class="content-list__item">Genre</p>
+                    </li>
+                  </ul>
+
+                  <ul class="list film-info___values">
+                    <li class="film-info_name">
+                      <p class="content-list__item">
+                        <span class="vote">7.3</span>
+                        <span class="votes"> / 1260</span>
+                      </p>
+                    </li>
+                    <li class="film-info__values">
+                      <p class="content-list__item popularity">960.238</p>
+                    </li>
+                    <li class="film-info__values">
+                      <p class="content-list__item title">Oppenheimer</p>
+                    </li>
+                    <li class="film-info__values">
+                      <p class="content-list__item genres">Drama History</p>
+                    </li>
+                  </ul>
+                </div>
+                <h3 class="description-title">ABOUT</h3>
+                <p class="description-text">
+                  Four of the West's most infamous outlaws carry out a daring
+                  bank heist in the gold-rush town, Bath Water. As the posse
+                  takes chase, things take a turn for the worse, as the bandits
+                  realize they've been double-crossed - but by who?
+                </p>
+                <ul class="list-button">
+                  <li>
+                    <button class="watched-btn watched-button wbtn2">
+                      Add to watched
+                    </button>
+                  </li>
+                  <li>
+                    <button class="queue-btn queue-button qbtn2">
+                      Add to queue
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer-container">
+      <span>&copy; 2023 | All Rights Reserved |</span>
+      <span
+        >Developed with <span class="heart">&#x2764;</span> by
+        <span class="team">All4Team</span></span
+      >
+    </footer>
+    <button type="button" class="to-search-form">
+      <svg>
+        <use href="./images/symbol-defs.svg#icon-circle-up"></use>
+      </svg>
+    </button>
+    <script type="module" src="./js/buttons.js"></script>
+    <script type="module" src="./js/my_library.js"></script>
+  </body>
+</html>
