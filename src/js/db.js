@@ -1,4 +1,9 @@
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+} from '../../node_modules/firebase/firestore';
 import { app } from './firebase_config.js';
 // import { watchedMocieList, queuedMovieList } from '';
 // import { DeviceUUID } from 'device-uuid/lib/device-uuid.js';
