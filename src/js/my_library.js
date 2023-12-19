@@ -255,7 +255,7 @@ function watchedBtnClick2() {
 
   // saveMovieList(WATCHED_KEY, watchedList);
   // upload the list of watched movies to the firestore database
-  uploadWatchedQueuedMoviesToDB(watchedList, queueList);
+  uploadWatchedQueuedMoviesToDB('watched', queueList);
   //------------------------------------------------------
   // sortMovies(watchedList);
   // sortMovies(queueList);
@@ -303,7 +303,7 @@ function queueBtnClick2() {
   }
   // saveMovieList(QUEUE_KEY, queueList);
   //upload the list of queued movies to the firestore database
-  uploadWatchedQueuedMoviesToDB(watchedList, queueList);
+  uploadWatchedQueuedMoviesToDB('queued', queueList);
   //----------------------------------------------------
   // sortMovies(watchedList);
   // sortMovies(queuedList);

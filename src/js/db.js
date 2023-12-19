@@ -67,10 +67,15 @@ const downloadWatchedQueuedMoviesFromDB = async function getItem() {
     itemAccess = await getDoc(itemPath);
     const savedMovies = itemAccess.data();
     console.log(savedMovies);
-    // savedMoviesLength = Object.keys(savedMovies).length;
-    // console.log(savedMoviesLength);
-    watchedQueuedMovies.watchedMovies = savedMovies.watchedMovies;
-    watchedQueuedMovies.queuedMovies = savedMovies.queuedMovies;
+    savedMoviesLength = Object.keys(savedMovies).length;
+    console.log(savedMoviesLength);
+    if (savedMoviesLength === 0) {
+      savedMovies.watchedMovies = [];
+      savedMovies.queuedMovies = [];
+    } else {
+      watchedQueuedMovies.watchedMovies = savedMovies.watchedMovies;
+      watchedQueuedMovies.queuedMovies = savedMovies.queuedMovies;
+    }
     console.log(
       'The movies added to watched are: ',
       savedMovies.watchedMovies,
@@ -99,7 +104,7 @@ const uploadWatchedQueuedMoviesToDB = async function setItem(
   listType,
   addMovies
 ) {
-  // debugger;
+  debugger;
   downloadWatchedQueuedMoviesFromDB();
   console.log(listType, addMovies);
   // let addMovies = [];
@@ -143,7 +148,12 @@ const uploadWatchedQueuedMoviesToDB = async function setItem(
   try {
     // debugger;
     await setDoc(itemPath, watchedQueuedMovies);
-    console.log('The list of movies has been successfully added');
+    console.log(
+      'The list of added watched movies is: ',
+      eatchedQueuedMovies.watchedMovies,
+      ' and queued is: ',
+      watchedQueuedMovies.queuedMovies
+    );
   } catch (error) {
     console.log(`I couldn't save the list of movies, because: `, error);
   }
