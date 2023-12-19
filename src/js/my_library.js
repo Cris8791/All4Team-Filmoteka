@@ -13,7 +13,10 @@ import {
 
 var watchedList = [],
   queueList = [],
+  // allMovies = [],
   movArray = [],
+  // moviesWatched = [],
+  // moviesQueued = [],
   watchedActive = true;
 var m;
 
@@ -33,50 +36,54 @@ function takeItem() {
     console.log(itemData);
     const itemDataLength = Object.keys(itemData).length;
     console.log(itemDataLength);
-    if (itemDataLength === 0) {
-      // debugger;
-      initializeLibrary();
+    if (
+      itemDataLength === 0 ||
+      itemData.queuedMovies === undefined ||
+      itemData.watchedMovies === undefined
+    ) {
+      initializePage();
       return;
     }
-    const pickedMoviesTextified = itemData.movies;
-    const pickedMovies = JSON.parse(pickedMoviesTextified);
-    console.log(pickedMovies);
+    // const pickedMoviesTextified = itemData.movies;
+    // const pickedMovies = JSON.parse(pickedMoviesTextified);
+    // console.log(pickedMovies);
     // debugger;
     // const pickListLength = Object.keys(pickList).length;
-    // const queuedMoviesLenght = pickList.queuedMovies.length;
-    // const watchedMoviesLenght = pickList.watchedMovies.length;
-    // const firstMovieWatched = pickList.watchedMovies[0];
-    // const firstMovieQueued = pickList.queuedMovies[0];
-    // console.log(pickList.watchedMovies[0]);
+    const queuedMoviesLength = itemData.queuedMovies.length;
+    const watchedMoviesLength = itemData.watchedMovies.length;
+    const watchedMovies = itemData.watchedMovies;
+    const queuedMovies = itemData.queuedMovies;
+    console.log(queuedMoviesLength);
     // if (pickListLength === 0) {
     //   watchedList = [];
     //   queueList = [];
     // }
     // debugger;
-    // if (queuedMoviesLenght !== 0) {
-    //   if (firstMovieQueued !== '[]') {
-    //     const queuedListText = pickList.queuedMovies[0];
-    //     queueList = JSON.parse(queuedListText);
-    //   }
-    // }
-    // if (watchedMoviesLenght !== 0) {
-    //   if (firstMovieWatched !== '[]') {
-    //     const watchedListText = pickList.watchedMovies[0];
-    //     watchedList = JSON.parse(watchedListText);
-    //   }
-    // }
-    let moviesWatched = [];
-    let moviesQueued = [];
-    pickedMovies.forEach(movie => {
-      if (movie.watched === true) {
-        moviesWatched.push(movie);
+    if (queuedMoviesLength !== 0) {
+      if (queuedMovies !== '[]') {
+        const queuedListText = itemData.queuedMovies[0];
+        queueList = JSON.parse(queuedListText);
       }
-      if (movie.queued === true) {
-        moviesQueued.push(movie);
+    }
+    if (watchedMoviesLength !== 0) {
+      if (watchedMovies !== '[]') {
+        const watchedListText = itemData.watchedMovies[0];
+        watchedList = JSON.parse(watchedListText);
       }
-    });
-    watchedList = moviesWatched;
-    queueList = moviesQueued;
+    }
+    // let moviesWatched = [];
+    // let moviesQueued = [];
+    // pickedMovies.forEach(movie => {
+    //   if (movie.watched === true) {
+    //     moviesWatched.push(movie);
+    //   }
+    //   if (movie.queued === true) {
+    //     moviesQueued.push(movie);
+    //   }
+    // });
+    // allMovies = pickedMovies;
+    // sortMovies(pickedMovies);
+
     initializeLibrary();
     console.log(
       'You movies saved in watched are:',
@@ -191,36 +198,65 @@ const queueBtn2 = document.querySelector('.qbtn2');
 watchedBtn2.addEventListener('click', watchedBtnClick2);
 queueBtn2.addEventListener('click', queueBtnClick2);
 
+//sotingMovies
+// function sortMovies(movies) {
+//   movies.forEach(movie => {
+//     if (movie.watched === true) {
+//       moviesWatched.push(movie);
+//     }
+//     if (movie.queued === true) {
+//       moviesQueued.push(movie);
+//     }
+//   });
+//   watchedList = moviesWatched;
+//   queueList = moviesQueued;
+// }
+//---------------------------------------------------
+
 function watchedBtnClick2() {
+  // debugger;
   if (m.watched) {
     m.watched = false;
     watchedBtn2.innerHTML = 'Add to watched';
-    // let extractPos = watchedList.findIndex(movie => movie.id === m.id);
-    // watchedList.splice(extractPos, 1);
+    let extractPos = watchedList.findIndex(movie => movie.id === m.id);
+    watchedList.splice(extractPos, 1);
+    // const queuedMoviesLength = queueList.length;
+    // if (queuedMoviesLength === 0) {
+    // const moviePlaced = allMovies.findIndex(movie => movie.id === m.id);
+    // allMovies[moviePlaced].watched = false;
+    // } else {
+    //   const moviePlaced = queueList.findIndex(movie => movie.id === m.id);
+    //   queueList[moviePlaced].watched = false;
+    // }
   } else {
     watchedBtn2.innerHTML = 'Remove from watched';
     m.watched = true;
-    if (watchedList.length !== 0) {
-      watchedList.forEach(movie => {
-        console.log(movie.id);
-        console.log(m.id);
-        if (m.id === movie.id) {
-          console.log('the movie is already in the list');
-          watchedBtn.innerHTML = 'Remove from watched';
-          return;
-        }
-        watchedList.push(m);
-        watchedBtn.innerHTML = 'Remove from watched';
-      });
-    } else {
-      watchedList.push(m);
-      watchedBtn.innerHTML = 'Remove from watched';
-    }
+    // let isOnList = false;
+    // console.log('The list of movies watched is: ', watchedList);
+    // console.log('There are ', watchedList.length, ' movies wached');
+    // if (watchedList.length !== 0) {
+    //   watchedList.forEach(movie => {
+    //     console.log(movie.id);
+    //     console.log(m.id);
+    //     if (m.id === movie.id) {
+    //       movie.watched = true;
+    //       isOnList = true;
+    //       watchedBtn2.innerHTML = 'Remove from watched';
+    //     }
+    //   });
+    // }
+    // if (isOnList === false) {
+    watchedList.push(m);
+    //   watchedBtn2.innerHTML = 'Remove from watched';
+    // }
   }
+
   // saveMovieList(WATCHED_KEY, watchedList);
   // upload the list of watched movies to the firestore database
-  uploadWatchedQueuedMoviesToDB(watchedList);
+  uploadWatchedQueuedMoviesToDB(watchedList, queueList);
   //------------------------------------------------------
+  // sortMovies(watchedList);
+  // sortMovies(queueList);
   if (watchedActive) {
     renderMoviesList(watchedList);
   } else {
@@ -231,32 +267,44 @@ function queueBtnClick2() {
   if (m.queued) {
     m.queued = false;
     queueBtn2.innerHTML = 'Add to queue';
-    // let extractPos = queueList.findIndex(movie => movie.id === m.id);
-    // queueList.splice(extractPos, 1);
+    let extractPos = queueList.findIndex(movie => movie.id === m.id);
+    queueList.splice(extractPos, 1);
+    // const queuedMoviesLength = queueList.length;
+    // if (queuedMoviesLength === 0) {
+    // const moviePlaced = allMovies.findIndex(movie => movie.id === m.id);
+    // allMovies[moviePlaced].queued = false;
+    // } else {
+    //   const moviePlaced = queueList.findIndex(movie => movie.id === m.id);
+    //   queueList[moviePlaced].queued = false;
+    // }
   } else {
     queueBtn2.innerHTML = 'Remove from queue';
     m.queued = true;
-    if (queueList.length !== 0) {
-      queueList.forEach(movie => {
-        console.log(movie.id);
-        console.log(m);
-        if (m.id === movie.id) {
-          console.log('the movie is already in the list');
-          queueBtn.innerHTML = 'Remove from watched';
-          return;
-        }
-        queueList.push(m);
-        queueBtn.innerHTML = 'Remove from watched';
-      });
-    } else {
-      queueList.push(m);
-      queueBtn.innerHTML = 'Remove from watched';
-    }
+    // let isOnList = false;
+    // console.log('The list of movies queued is: ', queueList);
+    // console.log('There are ', queueList.length, ' movies in the queue');
+    // if (queueList.length !== 0) {
+    //   queueList.forEach(movie => {
+    //     console.log(movie.id);
+    //     console.log(m.id);
+    //     if (m.id === movie.id) {
+    //       movie.queued = true;
+    //       isOnList = true;
+    //       queueBtn2.innerHTML = 'Remove from queue';
+    //     }
+    //   });
+    // }
+    // if (isOnList === false) {
+    queueList.push(m);
+    //   queueBtn2.innerHTML = 'Remove from queue';
+    // }
   }
   // saveMovieList(QUEUE_KEY, queueList);
   //upload the list of queued movies to the firestore database
-  uploadWatchedQueuedMoviesToDB(queueList);
+  uploadWatchedQueuedMoviesToDB(watchedList, queueList);
   //----------------------------------------------------
+  // sortMovies(watchedList);
+  // sortMovies(queuedList);
   if (watchedActive) {
     renderMoviesList(watchedList);
   } else {
