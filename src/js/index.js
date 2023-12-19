@@ -10,11 +10,6 @@ import {
   saveMovieList,
   loadMovieList,
 } from './storage.js';
-import {
-  uploadWatchedQueuedMoviesToDB,
-  downloadWatchedQueuedMoviesFromDB,
-  itemAccess,
-} from './db.js';
 
 var crtPage = 0,
   totalPages = 0,
@@ -37,7 +32,6 @@ var crtPage = 0,
   pos = 0,
   movieArray = [],
   watchedList = [],
-  // allMovies = [],
   queueList = [];
 
 // spinner section
@@ -74,7 +68,6 @@ watchedBtn.addEventListener('click', watchedBtnClick);
 queueBtn.addEventListener('click', queueBtnClick);
 
 function watchedBtnClick() {
-  // debugger;
   if (movieArray[pos].watched) {
     movieArray[pos].watched = false;
     watchedBtn.innerHTML = 'Add to watched';
@@ -82,57 +75,12 @@ function watchedBtnClick() {
       movie => movie.id === movieArray[pos].id
     );
     watchedList.splice(extractPos, 1);
-    console.log(watchedList);
-    // watchedList.push(movieArray[pos]);
-    // watchList;
-    // console.log(watchedList);
-    // const watchedMoviesLength = watchedList.length;
-    // if (watchedMoviesLength === 0) {
-    // debugger;
-    // const moviePlaced = allMovies.findIndex(
-    //   movie => movie.id === movieArray[pos].id
-    // );
-    // console.log(moviePlaced);
-    // allMovies[moviePlaced].watched = false;
-    // } else {
-    //   const moviePlaced = watchedList.findIndex(
-    //     movie => movie.id === movieArray[pos].id
-    //   );
-    //   console.log(moviePlaced);
-    //   watchedList[moviePlaced].watched = false;
-    // }
   } else {
-    // debugger;
     movieArray[pos].watched = true;
-    // let isOnList = false;
-    // console.log('The list of movies watched is: ', watchedList);
-    // console.log('There are ', watchedList.length, ' movies wached');
-    // if (watchedList.length !== 0) {
-    //   watchedList.forEach(movie => {
-    //     console.log(movie.id);
-    //     console.log(movieArray[pos].id);
-    //     if (movieArray[pos].id === movie.id) {
-    //       movie.watched = true;
-    //       isOnList = true;
-    //       watchedBtn.innerHTML = 'Remove from watched';
-    //     }
-    //   });
-    // }
-    // if (isOnList === false) {
-    //   watchedList.push(movieArray[pos]);
-    //   watchedBtn.innerHTML = 'Remove from watched';
-    // }
     watchedList.push(movieArray[pos]);
     watchedBtn.innerHTML = 'Remove from watched';
-    // let moviePlacement = watchedList.findIndex(
-    //   movie => movie.id === movieArray[pos].id
-    // );
-    // watchedList[moviePlacement].watched = true;
   }
-  // saveMovieList(WATCHED_KEY, watchedList);
-  // upload the list of watched movies to the firestore database
-  uploadWatchedQueuedMoviesToDB('watched', watchedList);
-  //------------------------------------------------------
+  saveMovieList(WATCHED_KEY, watchedList);
 }
 function queueBtnClick() {
   if (movieArray[pos].queued) {
@@ -142,51 +90,12 @@ function queueBtnClick() {
       movie => movie.id === movieArray[pos].id
     );
     queueList.splice(extractPos, 1);
-    // queueList.push(movieArray[pos]);
-    // const watchedMoviesLength = watchedList.length;
-    // debugger;
-    // if (watchedMoviesLength === 0) {
-    // const moviePlaced = allMovies.findIndex(
-    //   movie => movie.id === movieArray[pos].id
-    // );
-    // console.log(moviePlaced);
-    // allMovies[moviePlaced].queued = false;
-    // } else {
-    //   const moviePlaced = watchedList.findIndex(
-    //     movie => movie.id === movieArray[pos].id
-    //   );
-    //   console.log(moviePlaced);
-    //   watchedList[moviePlaced].queued = false;
-    // }
-    // queueList[moviePlaced].queued = false;
   } else {
     movieArray[pos].queued = true;
-    //   let isOnList = false;
-    //   console.log('The list of movies queued is: ', queueList);
-    //   console.log('There are ', queueList.length, ' movies in the queue');
-    //   if (queueList.length !== 0) {
-    //     queueList.forEach(movie => {
-    //       console.log(movie.id);
-    //       console.log(movieArray[pos].id);
-    //       if (movieArray[pos].id === movie.id) {
-    //         movie.queued = true;
-    //         isOnList = true;
-    //         queueBtn.innerHTML = 'Remove from queue';
-    //       }
-    //     });
-    //   }
-    //   if (isOnList === false) {
-    //     queueList.push(movieArray[pos]);
-    //     queueBtn.innerHTML = 'Remove from queue';
-    //   }
     queueList.push(movieArray[pos]);
     queueBtn.innerHTML = 'Remove from queue';
   }
-  // saveMovieList(QUEUE_KEY, queueList);
-  //upload the list of queued movies to the firestore database
-  console.log(queueList);
-  uploadWatchedQueuedMoviesToDB('queue', queueList);
-  //----------------------------------------------------
+  saveMovieList(QUEUE_KEY, queueList);
 }
 // end of modal section
 
@@ -287,7 +196,6 @@ function processMoviesData(data) {
       }
       movieData.genres = genre;
       //add "watched" and "queue" properties
-      // debugger;
       if (watchedList.findIndex(movie => movie.id === movieData.id) > -1) {
         movieData.watched = true;
       } else movieData.watched = false;
@@ -302,93 +210,12 @@ function processMoviesData(data) {
     totalPages = 250;
   }
 }
-
-// set the values ​​stored in the database in the lists of watched movies and put them in the queue
-async function setStoredValues() {
-  downloadWatchedQueuedMoviesFromDB();
-  await new Promise(resolve => {
-    setTimeout(() => {
-      resolve(takeItem());
-    }, 1000);
-  });
-}
-
-function takeItem() {
-  try {
-    // debugger;
-    const itemData = itemAccess.data();
-    const itemDataLength = Object.keys(itemData).length;
-    console.log(itemDataLength);
-    if (
-      itemDataLength === 0 ||
-      itemData.queuedMovies === undefined ||
-      itemData.watchedMovies === undefined
-    ) {
-      initializePage();
-      return;
-    }
-    // const pickedMoviesTextified = itemData;
-    // const pickedMovies = JSON.parse(pickedMoviesTextified);
-    // console.log(pickedMovies);
-    // debugger;
-    // const pickedMoviesLength = Object.keys(pickedMovies).length;
-    const queuedMoviesLength = itemData.queuedMovies.length;
-    const watchedMoviesLength = itemData.watchedMovies.length;
-    const watchedMovies = itemData.watchedMovies;
-    const queuedMovies = itemData.queuedMovies;
-    console.log(watchedMoviesLength);
-    console.log(queuedMoviesLength);
-    // if (pickedMoviesLength === 0) {
-    //   movies = [];
-    // }
-    // debugger;
-    if (queuedMoviesLength !== 0) {
-      if (queuedMovies !== '[]') {
-        const queuedListText = itemData.queuedMovies;
-        queueList = JSON.parse(queuedListText);
-      }
-    }
-    if (watchedMoviesLength !== 0) {
-      if (watchedMovies !== '[]') {
-        const watchedListText = itemData.watchedMovies;
-        watchedList = JSON.parse(watchedListText);
-      }
-    }
-    // let moviesWatched = [];
-    // let moviesQueued = [];
-    // pickedMovies.forEach(movie => {
-    //   if (movie.watched === true) {
-    //     moviesWatched.push(movie);
-    //   }
-    //   if (movie.queued === true) {
-    //     moviesQueued.push(movie);
-    //   }
-    // });
-
-    // watchedList = moviesWatched;
-    // queueList = moviesQueued;
-    // allMovies = pickedMovies;
-    initializePage();
-    console.log(
-      'You movies saved in watched are:',
-      watchedList,
-      'and queued are: ',
-      queueList
-    );
-  } catch (error) {
-    console.log(`I couldn't load the data from the database, because: `, error);
-  }
-}
-//----------------------------------------------------------------------
-
 async function initializePage() {
   showSpinner();
 
   //read the movies in library (if there are some)
-  // watchedList = loadMovieList(WATCHED_KEY);
-  // queueList = loadMovieList(QUEUE_KEY);
-  // setStoredValues();
-  // debugger;
+  watchedList = loadMovieList(WATCHED_KEY);
+  queueList = loadMovieList(QUEUE_KEY);
 
   //fetch movie genres and put the result in listOfGenres
   const listOfGen = await fetchMovieGenres();
@@ -411,8 +238,6 @@ async function initializePage() {
 }
 
 function showModal(event) {
-  // debugger;
-  // if()
   if (event.target.nodeName !== 'IMG') return;
   const imgId = event.target.attributes[0].value;
   pos = movieArray.findIndex(movie => imgId - movie.id === 0);
@@ -473,4 +298,4 @@ function pageSelector() {
     renderSearchedMovies(searchQuery);
   }
 }
-setStoredValues();
+initializePage();
