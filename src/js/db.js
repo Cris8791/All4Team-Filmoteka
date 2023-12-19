@@ -51,7 +51,7 @@ const itemPath = doc(db, 'watched_and_queued_movie_list', `${deviceID}`);
 
 //the rest of the code
 // let savedMovies = '[]';
-var itemAccess = '';
+let itemAccess = '';
 let watchedQueuedMovies = {
   watchedMovies: [],
   queuedMovies: [],
@@ -67,7 +67,7 @@ const downloadWatchedQueuedMoviesFromDB = async function getItem() {
     itemAccess = await getDoc(itemPath);
     const savedMovies = itemAccess.data();
     console.log(savedMovies);
-    savedMoviesLength = Object.keys(savedMovies).length;
+    const savedMoviesLength = Object.keys(savedMovies).length;
     console.log(savedMoviesLength);
     if (savedMoviesLength === 0) {
       savedMovies.watchedMovies = [];
