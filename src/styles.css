@@ -327,25 +327,6 @@ input:checked + label svg.moon {
 .movies-div img {
   margin-bottom: 10px;
 }
-.movie-title {
-  color: var(--dark-color);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 16px;
-  text-transform: uppercase;
-}
-.movie-short-descr {
-  color: var(--orange-color);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 16px;
-}
-.movie-short-descr span {
-  border-radius: 5px;
-  background-color: var(--orange-color);
-  color: var(--light-color);
-  padding: 1px 10 1px 10px;
-}
 .buttons-div {
   margin-bottom: 20px;
   display: flex;
@@ -368,7 +349,7 @@ input:checked + label svg.moon {
 }
 .buttons-div button.active {
   background-color: var(--orange-color);
-  color: var(--light-color);
+  color: var(--light-color) !important;
 }
 @media (min-width: 768px) {
   .header-background {
@@ -418,7 +399,25 @@ input:checked + label svg.moon {
     grid-gap: 30px;
     padding: 60px 76px 50px 76px;
   }
-
+  .movie-title {
+    color: var(--dark-color);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    text-transform: uppercase;
+  }
+  .movie-short-descr {
+    color: var(--orange-color);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+  }
+  .movie-short-descr span {
+    border-radius: 5px;
+    background-color: var(--orange-color);
+    color: var(--light-color);
+    padding: 1px 10 1px 10px;
+  }
   footer.footer-container {
     flex-direction: row;
     font-size: 16px;

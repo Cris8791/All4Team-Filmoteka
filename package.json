@@ -1,24 +1,25 @@
 {
-  "name": "all4team-filmoteka",
+  "name": "filmoteka-with-firebase",
   "version": "2.0.0",
   "description": "",
-  "homepage": "https://github.com/Cris8791/All4Team-Filmoteka",
+  "homepage": "https://urraccon.github.io/filmoteka-with-firebase",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /All4Team-Filmoteka/"
+    "build": "parcel build src/*.html --public-url /filmoteka-with-firebase/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Cris8791/All4Team-Filmoteka.git"
+    "url": "git+https://github.com/goitacademy/parcel-project-template.git"
   },
   "keywords": [],
   "author": "Alexander Repeta <alexander.repeta@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Cris8791/All4Team-Filmoteka/issues"
+    "url": "https://github.com/goitacademy/parcel-project-template/issues"
   },
   "dependencies": {
     "axios": "^1.6.2",
+    "firebase": "^10.7.1",
     "modern-normalize": "^1.1.0"
   },
   "devDependencies": {
@@ -26,7 +27,8 @@
     "buffer": "^6.0.3",
     "parcel": "^2.6.0",
     "parcel-reporter-clean-dist": "^1.0.4",
-    "posthtml-include": "^1.7.4"
+    "posthtml-include": "^1.7.4",
+    "process": "^0.11.10"
   },
   "browserslist": "> 0.5%, last 2 versions, not dead"
 }

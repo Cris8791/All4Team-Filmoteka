@@ -1,4 +1,19 @@
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+//firebase configuration
+// import { initializeApp } from 'firebase/app';
+
+// const firebaseConfig = {
+//   apiKey: 'AIzaSyAKYrF2YoqGKSaSU407C9X91DqaZMAg4q4',
+//   authDomain: 'filmoteka-urraccon.firebaseapp.com',
+//   projectId: 'filmoteka-urraccon',
+//   storageBucket: 'filmoteka-urraccon.appspot.com',
+//   messagingSenderId: '712511464775',
+//   appId: '1:712511464775:web:f28be5eb7fc38469c69862',
+// };
+
+// const app = initializeApp(firebaseConfig);
+//--------------------------------------------------------------
+
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { app } from './firebase_config.js';
 // import { watchedMocieList, queuedMovieList } from '';
 // import { DeviceUUID } from 'device-uuid/lib/device-uuid.js';
@@ -6,6 +21,8 @@ import { app } from './firebase_config.js';
 // import { biri } from 'biri';
 
 const db = getFirestore(app);
+// console.log(app);
+// console.log(db);
 // const biri = require('biri');
 const deviceID = 'your-device-ID';
 // const x = async function y() {
@@ -19,7 +36,22 @@ const deviceID = 'your-device-ID';
 // }
 
 const itemPath = doc(db, 'watched_and_queued_movie_list', `${deviceID}`);
+// // test
+// async function getData() {
+//   const docSnap = await getDoc(itemPath);
+//   if (docSnap.exists()) {
+//     console.log('Document data:', docSnap.data());
+//   } else {
+//     // docSnap.data() will be undefined in this case
+//     console.log('No such document!');
+//   }
+// }
+// getData();
+//
+
+//the rest of the code
 // let savedMovies = '[]';
+var itemAccess = '';
 let watchedQueuedMovies = {
   watchedMovies: [],
   queuedMovies: [],
@@ -33,7 +65,7 @@ console.log(deviceID);
 const downloadWatchedQueuedMoviesFromDB = async function getItem() {
   try {
     itemAccess = await getDoc(itemPath);
-    savedMovies = itemAccess.data();
+    const savedMovies = itemAccess.data();
     console.log(savedMovies);
     // savedMoviesLength = Object.keys(savedMovies).length;
     // console.log(savedMoviesLength);
@@ -206,3 +238,4 @@ export {
 //   uploadWatchedQueuedMoviesToDB,
 //   downloadWatchedQueuedMoviesFromDB,
 // } from './js/db.js';
+//-----------------------------------------------------------------------
