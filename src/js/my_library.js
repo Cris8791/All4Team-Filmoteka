@@ -41,7 +41,7 @@ function takeItem() {
       itemData.queuedMovies === undefined ||
       itemData.watchedMovies === undefined
     ) {
-      initializePage();
+      initializeLibrary();
       return;
     }
     // const pickedMoviesTextified = itemData.movies;
