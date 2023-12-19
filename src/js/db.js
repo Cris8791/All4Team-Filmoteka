@@ -16,7 +16,7 @@
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { app } from './firebase_config.js';
 // import { watchedMocieList, queuedMovieList } from '';
-// import { DeviceUUID } from 'device-uuid/lib/device-uuid.js';
+import { DeviceUUID } from 'device-uuid';
 // import { v4 as uuid } from 'uuid';
 // import { biri } from 'biri';
 
@@ -24,7 +24,7 @@ const db = getFirestore(app);
 // console.log(app);
 // console.log(db);
 // const biri = require('biri');
-const deviceID = 'your-device-ID';
+const deviceID = new DeviceUUID().get();
 // const x = async function y() {
 //   new Promise((resolve) => {
 //     setTimeout(resolve(z),1000);
@@ -67,15 +67,19 @@ const downloadWatchedQueuedMoviesFromDB = async function getItem() {
     itemAccess = await getDoc(itemPath);
     const savedMovies = itemAccess.data();
     console.log(savedMovies);
+    if (savedMovies === undefined) {
+      await setDoc(itemPath, watchedQueuedMovies);
+      return;
+    }
     const savedMoviesLength = Object.keys(savedMovies).length;
     console.log(savedMoviesLength);
-    if (savedMoviesLength === 0) {
-      savedMovies.watchedMovies = [];
-      savedMovies.queuedMovies = [];
-    } else {
-      watchedQueuedMovies.watchedMovies = savedMovies.watchedMovies;
-      watchedQueuedMovies.queuedMovies = savedMovies.queuedMovies;
-    }
+    // if (savedMoviesLength === 0) {
+    //   savedMovies.watchedMovies = [];
+    //   savedMovies.queuedMovies = [];
+    // } else {
+    watchedQueuedMovies.watchedMovies = savedMovies.watchedMovies;
+    watchedQueuedMovies.queuedMovies = savedMovies.queuedMovies;
+    // }
     console.log(
       'The movies added to watched are: ',
       savedMovies.watchedMovies,
@@ -104,48 +108,47 @@ const uploadWatchedQueuedMoviesToDB = async function setItem(
   listType,
   addMovies
 ) {
-  debugger;
-  downloadWatchedQueuedMoviesFromDB();
-  console.log(listType, addMovies);
-  // let addMovies = [];
-  // debugger;
-  // if (addWatchedMovies === null) {
-  //   if ((addQueuedMovies = null)) {
-  //   }
-  // }
-  // const addWatchedMoviesLength = addWatchedMovies.length;
-  // const addQueuedMoviesLength = addQueuedMovies.length;
-  // console.log(addWatchedMoviesLength);
-  // if (addWatchedMoviesLength !== 0) {
-  //   if (addQueuedMoviesLength !== 0) {
-  //     addWatchedMovies.forEach(watchedMovie => {
-  //       addQueuedMovies.forEach(queuedMovie => {
-  //         if (watchedMovie.id === queuedMovie.id) {
-  //           let moviePlaced = addWatchedMovies.findIndex(
-  //             movie => movie.id === watchedMovie.is
-  //           );
-  //           addWatchedMovies.splice(moviePlaced, 1);
-  //         }
-  //       });
-  //     });
-  //   }
-  // }
-  // const addMovies = addWatchedMovies.concat(addQueuedMovies);
-  const addMoviesTextified = JSON.stringify(addMovies);
-  console.log(addMoviesTextified);
-  // if (addMovieTextified === '[]') {
-  //   return;
-  // }
-  // watchedQueuedMovies.movies = addMoviesTextified;
-  if (listType === 'watched') {
-    watchedQueuedMovies.watchedMovies = [];
-    watchedQueuedMovies.watchedMovies.push(addMoviesTextified);
-  } else {
-    watchedQueuedMovies.queuedMovies = [];
-    watchedQueuedMovies.queuedMovies.push(addMoviesTextified);
-  }
-
   try {
+    // debugger;
+    downloadWatchedQueuedMoviesFromDB();
+    console.log(listType, addMovies);
+    // let addMovies = [];
+    // debugger;
+    // if (addWatchedMovies === null) {
+    //   if ((addQueuedMovies = null)) {
+    //   }
+    // }
+    // const addWatchedMoviesLength = addWatchedMovies.length;
+    // const addQueuedMoviesLength = addQueuedMovies.length;
+    // console.log(addWatchedMoviesLength);
+    // if (addWatchedMoviesLength !== 0) {
+    //   if (addQueuedMoviesLength !== 0) {
+    //     addWatchedMovies.forEach(watchedMovie => {
+    //       addQueuedMovies.forEach(queuedMovie => {
+    //         if (watchedMovie.id === queuedMovie.id) {
+    //           let moviePlaced = addWatchedMovies.findIndex(
+    //             movie => movie.id === watchedMovie.is
+    //           );
+    //           addWatchedMovies.splice(moviePlaced, 1);
+    //         }
+    //       });
+    //     });
+    //   }
+    // }
+    // const addMovies = addWatchedMovies.concat(addQueuedMovies);
+    const addMoviesTextified = JSON.stringify(addMovies);
+    console.log(addMoviesTextified);
+    // if (addMovieTextified === '[]') {
+    //   return;
+    // }
+    // watchedQueuedMovies.movies = addMoviesTextified;
+    if (listType === 'watched') {
+      watchedQueuedMovies.watchedMovies = [];
+      watchedQueuedMovies.watchedMovies.push(addMoviesTextified);
+    } else {
+      watchedQueuedMovies.queuedMovies = [];
+      watchedQueuedMovies.queuedMovies.push(addMoviesTextified);
+    }
     // debugger;
     await setDoc(itemPath, watchedQueuedMovies);
     console.log(

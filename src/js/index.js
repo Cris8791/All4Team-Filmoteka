@@ -317,6 +317,11 @@ function takeItem() {
   try {
     // debugger;
     const itemData = itemAccess.data();
+    if (itemData === undefined) {
+      downloadWatchedQueuedMoviesFromDB();
+      initializePage();
+      return;
+    }
     const itemDataLength = Object.keys(itemData).length;
     console.log(itemDataLength);
     if (

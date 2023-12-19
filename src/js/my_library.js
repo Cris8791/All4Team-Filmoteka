@@ -34,6 +34,11 @@ function takeItem() {
   try {
     const itemData = itemAccess.data();
     console.log(itemData);
+    if (itemData === undefined) {
+      downloadWatchedQueuedMoviesFromDB();
+      initializeLibrary();
+      return;
+    }
     const itemDataLength = Object.keys(itemData).length;
     console.log(itemDataLength);
     if (
@@ -255,7 +260,7 @@ function watchedBtnClick2() {
 
   // saveMovieList(WATCHED_KEY, watchedList);
   // upload the list of watched movies to the firestore database
-  uploadWatchedQueuedMoviesToDB('watched', queueList);
+  uploadWatchedQueuedMoviesToDB('watched', watchedList);
   //------------------------------------------------------
   // sortMovies(watchedList);
   // sortMovies(queueList);
