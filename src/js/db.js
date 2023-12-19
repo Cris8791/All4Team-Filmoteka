@@ -37,6 +37,8 @@ const downloadWatchedQueuedMoviesFromDB = async function getItem() {
     console.log(savedMovies);
     // savedMoviesLength = Object.keys(savedMovies).length;
     // console.log(savedMoviesLength);
+    watchedQueuedMovies.watchedMovies = savedMovies.watchedMovies;
+    watchedQueuedMovies.queuedMovies = savedMovies.queuedMovies;
     console.log(
       'The movies added to watched are: ',
       savedMovies.watchedMovies,
@@ -65,6 +67,8 @@ const uploadWatchedQueuedMoviesToDB = async function setItem(
   listType,
   addMovies
 ) {
+  // debugger;
+  downloadWatchedQueuedMoviesFromDB();
   console.log(listType, addMovies);
   // let addMovies = [];
   // debugger;

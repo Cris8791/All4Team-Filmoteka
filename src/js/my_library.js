@@ -317,67 +317,116 @@ btnsDivElem2.addEventListener('click', showModal2);
 
 function showModal2(event) {
   if (event.target.nodeName !== 'IMG') return;
+  // look for the list in which watched or queued is false and I make it true if the movie is in both lists
+  // watchedList.forEach(movieWatched => {
+  //   queueList.forEach(movieQueued => {
+  //     if (movieWatched.id === movieQueued.id) {
+  //       if (movieWatched.queued === true && movieWatched.watched === true) {
+  //         let moviePlaced = queueList.findIndex(
+  //           movie => movie.id === movieWatched.id
+  //         );
+  //         if (queueList[moviePlaced].watched) {
+  //           queueList[moviePlaced].queued = true;
+  //         } else {
+  //           queueList[moviePlaced].watched = true;
+  //         }
+  //       }
+  //       if (movieQueued.queued === true && movieQueued.watched === true) {
+  //         let moviePlaced = watchedList.findIndex(
+  //           movie => movie.id === movieQueued.id
+  //         );
+  //         if (watchedList[moviePlaced].watched) {
+  //           watchedList[moviePlaced].queued = true;
+  //         } else {
+  //           watchedList[moviePlaced].watched = true;
+  //         }
+  //       }
+  //     }
+  //   });
+  // });
+  //----------------------------------------------------------------------
   if (watchedActive) {
     movArray = watchedList;
-    const imgId = event.target.attributes[0].value;
-    var pos = watchedList.findIndex(movie => imgId - movie.id === 0);
-    // fill modal content with movie data
-    const titleElem = document.querySelector('.title-film');
-    const imgElem = document.querySelector('.movie-poster');
-    const voteElem = document.querySelector('.vote');
-    const votesElem = document.querySelector('.votes');
-    const popularityElem = document.querySelector('.popularity');
-    const origTitleElem = document.querySelector('.title');
-    const genresElem = document.querySelector('.genres');
-    const overviewElem = document.querySelector('.description-text');
+    // const imgId = event.target.attributes[0].value;
+    // var pos = watchedList.findIndex(movie => imgId - movie.id === 0);
+    // // fill modal content with movie data
+    // const titleElem = document.querySelector('.title-film');
+    // const imgElem = document.querySelector('.movie-poster');
+    // const voteElem = document.querySelector('.vote');
+    // const votesElem = document.querySelector('.votes');
+    // const popularityElem = document.querySelector('.popularity');
+    // const origTitleElem = document.querySelector('.title');
+    // const genresElem = document.querySelector('.genres');
+    // const overviewElem = document.querySelector('.description-text');
 
-    m = movArray[pos];
-    titleElem.innerHTML = m.title;
-    imgElem.src = m.poster_path;
-    voteElem.innerHTML = m.vote_average;
-    votesElem.innerHTML = ' / ' + m.vote_count;
-    popularityElem.innerHTML = m.popularity;
-    origTitleElem.innerHTML = m.original_title;
-    genresElem.innerHTML = m.genres;
-    overviewElem.innerHTML = m.overview;
+    // m = movArray[pos];
+    // titleElem.innerHTML = m.title;
+    // imgElem.src = m.poster_path;
+    // voteElem.innerHTML = m.vote_average;
+    // votesElem.innerHTML = ' / ' + m.vote_count;
+    // popularityElem.innerHTML = m.popularity;
+    // origTitleElem.innerHTML = m.original_title;
+    // genresElem.innerHTML = m.genres;
+    // overviewElem.innerHTML = m.overview;
 
-    watchedBtn2.innerHTML = 'Add to watched';
+    // watchedBtn2.innerHTML = 'Add to watched';
   } else {
-    // movArray = queueList;
-    const imgId = event.target.attributes[0].value;
-    var pos = queueList.findIndex(movie => imgId - movie.id === 0);
-    // fill modal content with movie data
-    const titleElem = document.querySelector('.title-film');
-    const imgElem = document.querySelector('.movie-poster');
-    const voteElem = document.querySelector('.vote');
-    const votesElem = document.querySelector('.votes');
-    const popularityElem = document.querySelector('.popularity');
-    const origTitleElem = document.querySelector('.title');
-    const genresElem = document.querySelector('.genres');
-    const overviewElem = document.querySelector('.description-text');
+    movArray = queueList;
+    // const imgId = event.target.attributes[0].value;
+    // var pos = queueList.findIndex(movie => imgId - movie.id === 0);
+    // // fill modal content with movie data
+    // const titleElem = document.querySelector('.title-film');
+    // const imgElem = document.querySelector('.movie-poster');
+    // const voteElem = document.querySelector('.vote');
+    // const votesElem = document.querySelector('.votes');
+    // const popularityElem = document.querySelector('.popularity');
+    // const origTitleElem = document.querySelector('.title');
+    // const genresElem = document.querySelector('.genres');
+    // const overviewElem = document.querySelector('.description-text');
 
-    m = movArray[pos];
-    titleElem.innerHTML = m.title;
-    imgElem.src = m.poster_path;
-    voteElem.innerHTML = m.vote_average;
-    votesElem.innerHTML = ' / ' + m.vote_count;
-    popularityElem.innerHTML = m.popularity;
-    origTitleElem.innerHTML = m.original_title;
-    genresElem.innerHTML = m.genres;
-    overviewElem.innerHTML = m.overview;
+    // m = movArray[pos];
+    // titleElem.innerHTML = m.title;
+    // imgElem.src = m.poster_path;
+    // voteElem.innerHTML = m.vote_average;
+    // votesElem.innerHTML = ' / ' + m.vote_count;
+    // popularityElem.innerHTML = m.popularity;
+    // origTitleElem.innerHTML = m.original_title;
+    // genresElem.innerHTML = m.genres;
+    // overviewElem.innerHTML = m.overview;
   }
+  const imgId = event.target.attributes[0].value;
+  var pos = movArray.findIndex(movie => imgId - movie.id === 0);
+  // fill modal content with movie data
+  const titleElem = document.querySelector('.title-film');
+  const imgElem = document.querySelector('.movie-poster');
+  const voteElem = document.querySelector('.vote');
+  const votesElem = document.querySelector('.votes');
+  const popularityElem = document.querySelector('.popularity');
+  const origTitleElem = document.querySelector('.title');
+  const genresElem = document.querySelector('.genres');
+  const overviewElem = document.querySelector('.description-text');
 
-  queueBtn2.innerHTML = 'Add to queue';
-  // if (m.watched) {
-  //   watchedBtn2.innerHTML = 'Remove from watched';
-  // } else {
-  //   watchedBtn2.innerHTML = 'Add to watched';
-  // }
-  // if (m.queued) {
-  //   queueBtn2.innerHTML = 'Remove from queue';
-  // } else {
-  //   queueBtn2.innerHTML = 'Add to queue';
-  // }
+  m = movArray[pos];
+  titleElem.innerHTML = m.title;
+  imgElem.src = m.poster_path;
+  voteElem.innerHTML = m.vote_average;
+  votesElem.innerHTML = ' / ' + m.vote_count;
+  popularityElem.innerHTML = m.popularity;
+  origTitleElem.innerHTML = m.original_title;
+  genresElem.innerHTML = m.genres;
+  overviewElem.innerHTML = m.overview;
+
+  // queueBtn2.innerHTML = 'Add to queue';
+  if (m.watched) {
+    watchedBtn2.innerHTML = 'Remove from watched';
+  } else {
+    watchedBtn2.innerHTML = 'Add to watched';
+  }
+  if (m.queued) {
+    queueBtn2.innerHTML = 'Remove from queue';
+  } else {
+    queueBtn2.innerHTML = 'Add to queue';
+  }
 
   // show modal window
   backdrop2.style.display = 'block';

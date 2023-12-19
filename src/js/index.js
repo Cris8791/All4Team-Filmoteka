@@ -336,6 +336,7 @@ function takeItem() {
     const watchedMoviesLength = itemData.watchedMovies.length;
     const watchedMovies = itemData.watchedMovies;
     const queuedMovies = itemData.queuedMovies;
+    console.log(watchedMoviesLength);
     console.log(queuedMoviesLength);
     // if (pickedMoviesLength === 0) {
     //   movies = [];
