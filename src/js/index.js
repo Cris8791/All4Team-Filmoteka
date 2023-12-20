@@ -101,6 +101,7 @@ function watchedBtnClick() {
     //   console.log(moviePlaced);
     //   watchedList[moviePlaced].watched = false;
     // }
+    // debugger;
   } else {
     // debugger;
     movieArray[pos].watched = true;
@@ -130,9 +131,19 @@ function watchedBtnClick() {
     // watchedList[moviePlacement].watched = true;
   }
   // saveMovieList(WATCHED_KEY, watchedList);
+  //update both lists in case it was saved in both
+  watchedList.forEach(movieWatched => {
+    queueList.forEach(movieQueued => {
+      if (movieWatched.id === movieQueued.id) {
+        movieQueued.watched = true;
+      }
+    });
+  });
+  //--------------------------------------------------------
   // upload the list of watched movies to the firestore database
   uploadWatchedQueuedMoviesToDB('watched', watchedList);
-  //------------------------------------------------------
+  uploadWatchedQueuedMoviesToDB('queued', queueList);
+  //--------------------------------------------------------
 }
 function queueBtnClick() {
   if (movieArray[pos].queued) {
@@ -183,10 +194,20 @@ function queueBtnClick() {
     queueBtn.innerHTML = 'Remove from queue';
   }
   // saveMovieList(QUEUE_KEY, queueList);
+  //update both lists if the film is in both lists
+  watchedList.forEach(movieWatched => {
+    queueList.forEach(movieQueued => {
+      if (movieWatched.id === movieQueued.id) {
+        movieWatched.queued = true;
+      }
+    });
+  });
+  //------------------------------------------------------------
   //upload the list of queued movies to the firestore database
   console.log(queueList);
   uploadWatchedQueuedMoviesToDB('queue', queueList);
-  //----------------------------------------------------
+  uploadWatchedQueuedMoviesToDB('watched', watchedList);
+  //------------------------------------------------------------
 }
 // end of modal section
 

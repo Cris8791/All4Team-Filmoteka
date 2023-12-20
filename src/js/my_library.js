@@ -235,6 +235,13 @@ function watchedBtnClick2() {
     //   const moviePlaced = queueList.findIndex(movie => movie.id === m.id);
     //   queueList[moviePlaced].watched = false;
     // }
+    //update both lists if the film is in both lists
+    queueList.forEach(movieQueued => {
+      if (movieQueued.queued === true && movieQueued.watched === true) {
+        movieQueued.watched = false;
+      }
+    });
+    //-------------------------------------------------------------------
   } else {
     watchedBtn2.innerHTML = 'Remove from watched';
     m.watched = true;
@@ -261,6 +268,7 @@ function watchedBtnClick2() {
   // saveMovieList(WATCHED_KEY, watchedList);
   // upload the list of watched movies to the firestore database
   uploadWatchedQueuedMoviesToDB('watched', watchedList);
+  uploadWatchedQueuedMoviesToDB('queued', queueList);
   //------------------------------------------------------
   // sortMovies(watchedList);
   // sortMovies(queueList);
@@ -284,6 +292,13 @@ function queueBtnClick2() {
     //   const moviePlaced = queueList.findIndex(movie => movie.id === m.id);
     //   queueList[moviePlaced].queued = false;
     // }
+    //update both lists if the film is in both lists
+    watchedList.forEach(movieWatched => {
+      if (movieWatched.queued === true && movieWatched.watched === true) {
+        movieWatched.queued = false;
+      }
+    });
+    //---------------------------------------------------------------------
   } else {
     queueBtn2.innerHTML = 'Remove from queue';
     m.queued = true;
@@ -309,6 +324,7 @@ function queueBtnClick2() {
   // saveMovieList(QUEUE_KEY, queueList);
   //upload the list of queued movies to the firestore database
   uploadWatchedQueuedMoviesToDB('queued', queueList);
+  uploadWatchedQueuedMoviesToDB('watched', watchedList);
   //----------------------------------------------------
   // sortMovies(watchedList);
   // sortMovies(queuedList);
@@ -324,28 +340,33 @@ btnsDivElem2.addEventListener('click', showModal2);
 
 function showModal2(event) {
   if (event.target.nodeName !== 'IMG') return;
+  // debugger;
   // look for the list in which watched or queued is false and I make it true if the movie is in both lists
   // watchedList.forEach(movieWatched => {
   //   queueList.forEach(movieQueued => {
   //     if (movieWatched.id === movieQueued.id) {
   //       if (movieWatched.queued === true && movieWatched.watched === true) {
-  //         let moviePlaced = queueList.findIndex(
-  //           movie => movie.id === movieWatched.id
-  //         );
-  //         if (queueList[moviePlaced].watched) {
-  //           queueList[moviePlaced].queued = true;
-  //         } else {
-  //           queueList[moviePlaced].watched = true;
+  //         if (movieQueued.queued === true || movieQueued.watched === true) {
+  //           let moviePlaced = queueList.findIndex(
+  //             movie => movie.id === movieWatched.id
+  //           );
+  //           if (queueList[moviePlaced].watched) {
+  //             queueList[moviePlaced].queued = true;
+  //           } else {
+  //             queueList[moviePlaced].watched = true;
+  //           }
   //         }
   //       }
   //       if (movieQueued.queued === true && movieQueued.watched === true) {
-  //         let moviePlaced = watchedList.findIndex(
-  //           movie => movie.id === movieQueued.id
-  //         );
-  //         if (watchedList[moviePlaced].watched) {
-  //           watchedList[moviePlaced].queued = true;
-  //         } else {
-  //           watchedList[moviePlaced].watched = true;
+  //         if (movieWatched.queued === true || movieWatched.watched === true) {
+  //           let moviePlaced = watchedList.findIndex(
+  //             movie => movie.id === movieQueued.id
+  //           );
+  //           if (watchedList[moviePlaced].watched) {
+  //             watchedList[moviePlaced].queued = true;
+  //           } else {
+  //             watchedList[moviePlaced].watched = true;
+  //           }
   //         }
   //       }
   //     }
