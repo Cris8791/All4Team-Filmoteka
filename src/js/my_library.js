@@ -270,6 +270,12 @@ function watchedBtnClick2() {
   uploadWatchedQueuedMoviesToDB('watched', watchedList);
   uploadWatchedQueuedMoviesToDB('queued', queueList);
   //------------------------------------------------------
+  //displays a message if the list is empty
+  if (watchedList.length === 0) {
+    const spanElem = document.querySelector('.error-message');
+    spanElem.innerText = 'Oops! Your "watched" library is empty!';
+  }
+  //----------------------------------------------------
   // sortMovies(watchedList);
   // sortMovies(queueList);
   if (watchedActive) {
@@ -325,6 +331,12 @@ function queueBtnClick2() {
   //upload the list of queued movies to the firestore database
   uploadWatchedQueuedMoviesToDB('queued', queueList);
   uploadWatchedQueuedMoviesToDB('watched', watchedList);
+  //----------------------------------------------------
+  //displays a message if the list is empty
+  if (queueList.length === 0) {
+    const spanElem = document.querySelector('.error-message');
+    spanElem.innerText = 'Oops! Your "queue" library is empty!';
+  }
   //----------------------------------------------------
   // sortMovies(watchedList);
   // sortMovies(queuedList);
